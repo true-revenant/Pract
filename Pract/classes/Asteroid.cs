@@ -8,30 +8,22 @@ using System.Threading.Tasks;
 
 namespace Pract.classes
 {
-    class Asteroid
+    class Asteroid : BaseObject
     {
-        protected Point position;
-        protected Size size;
-        protected Point direction;
-
         Bitmap pic;
 
-        public Asteroid(Point pos, Point dir, Size size)
+        public Asteroid(Point pos, Point dir, Size size) : base(pos, dir, size)
         {
-            this.position = pos;
-            this.direction = dir;
-            this.size = size;
-
             InitPic();
         }
 
-        public virtual void Draw()
+        public override void Draw()
         {
             //Game.buffer.Graphics.FillEllipse(Brushes.LightCoral, position.X, position.Y, size.Width, size.Height);
             Game.buffer.Graphics.DrawImage(pic, new Rectangle(position.X, position.Y, size.Width, size.Height));
         }
 
-        public virtual void Update()
+        public override void Update()
         {
             position.X += direction.X;
             position.Y += direction.Y;

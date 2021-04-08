@@ -47,8 +47,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="classes\Asteroid.cs" />
+    <Compile Include="classes\BaseObject.cs" />
+    <Compile Include="classes\Bullet.cs" />
     <Compile Include="classes\Comet.cs" />
     <Compile Include="classes\Game.cs" />
+    <Compile Include="classes\Ship.cs" />
     <Compile Include="classes\Star.cs" />
     <Compile Include="GameForm.cs">
       <SubType>Form</SubType>
@@ -56,6 +59,7 @@
     <Compile Include="GameForm.Designer.cs">
       <DependentUpon>GameForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="interfaces\ICollision.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="GameForm.resx">

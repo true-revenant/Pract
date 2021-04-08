@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Pract.classes
 {
-    class Star : Asteroid
+    class Star : BaseObject
     {
         Bitmap pic;
 
@@ -21,6 +21,15 @@ namespace Pract.classes
         {
             //Game.buffer.Graphics.FillEllipse(Brushes.Yellow, position.X, position.Y, size.Width, size.Width);
             Game.buffer.Graphics.DrawImage(pic, new Rectangle(position.X, position.Y, size.Width, size.Width));
+        }
+
+        public override void Update() 
+        {
+            position.X += direction.X;
+            position.Y += direction.Y;
+
+            if (position.X < size.Width / 2 || position.X > Game.Width - size.Width / 2) direction.X = -direction.X;
+            if (position.Y < size.Height / 2 || position.Y > Game.Height - size.Height / 2) direction.Y = -direction.Y;
         }
 
         private void InitPic()
