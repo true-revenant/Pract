@@ -1,0 +1,7 @@
+F:\VS_projects\Geek Brains\2_Basics\Pract\HumanResources\bin\Debug\HumanResources.exe.config
+F:\VS_projects\Geek Brains\2_Basics\Pract\HumanResources\bin\Debug\HumanResources.exe
+F:\VS_projects\Geek Brains\2_Basics\Pract\HumanResources\bin\Debug\HumanResources.pdb
+F:\VS_projects\Geek Brains\2_Basics\Pract\HumanResources\obj\Debug\HumanResources.csprojAssemblyReference.cache
+F:\VS_projects\Geek Brains\2_Basics\Pract\HumanResources\obj\Debug\HumanResources.csproj.CoreCompileInputs.cache
+F:\VS_projects\Geek Brains\2_Basics\Pract\HumanResources\obj\Debug\HumanResources.exe
+F:\VS_projects\Geek Brains\2_Basics\Pract\HumanResources\obj\Debug\HumanResources.pdb

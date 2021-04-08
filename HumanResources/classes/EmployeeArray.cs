@@ -1,17 +1,19 @@
-﻿using HumanResources.classes;
-using System;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HumanResources
+namespace HumanResources.classes
 {
-    class Program
+    class EmployeeArray : IEnumerable
     {
-        static void Main(string[] args)
+        private BaseEmployee[] employees;
+
+        public EmployeeArray()
         {
-            var emps = new List<BaseEmployee>()
+            employees = new BaseEmployee[10]
             {
                 new FixedPayedEmployee("Брунгивальд", "Джонсон", 30, 12000),
                 new FixedPayedEmployee("Аристарх", "Сигизмундов", 25, 10000),
@@ -24,20 +26,12 @@ namespace HumanResources
                 new HourPayedEmployee("Сильвия", "Сильвстедт", 30, 34000),
                 new HourPayedEmployee("Арвен", "Арагорновна", 23, 23000)
             };
+        }
 
-            foreach (var emp in emps) Console.WriteLine(emp);
-            
-            // сортировка по возрасту по возрастанию
-            emps.Sort();
-            Console.WriteLine();
-
-            foreach (var emp in emps) Console.WriteLine(emp);
-
-            Console.WriteLine();
-            var empArr = new EmployeeArray();
-            foreach (var emp in empArr) Console.WriteLine(emp);
-
-            Console.ReadKey();
+        public IEnumerator GetEnumerator()
+        {
+            for (int i = 0; i < employees.Length; i++)
+                yield return employees[i];
         }
     }
 }

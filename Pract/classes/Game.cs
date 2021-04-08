@@ -88,36 +88,17 @@ namespace Pract.classes
             var rnd = new Random();
 
             asteroids = new Asteroid[15];
-            for (int i = 0; i < asteroids.Length; i++)
-            {
-                asteroids[i] = GenerateAsteroid(rnd);
-            }
+            for (int i = 0; i < asteroids.Length; i++) asteroids[i] = GenerateAsteroid(rnd);
 
             stars = new Star[60];
-            for (int i = 0; i < stars.Length; i++)
-            {
-                stars[i] = GenerateStar(rnd);
-            }
+            for (int i = 0; i < stars.Length; i++) stars[i] = GenerateStar(rnd);
 
             comets = new Comet[3];
-            for (int i = 0; i < comets.Length; i++)
-            {
-                comets[i] = GenerateComet(rnd);
-            }
+            for (int i = 0; i < comets.Length; i++) comets[i] = GenerateComet(rnd);
         }
 
         public static void Update()
         {
-            //foreach (var aster in asteroids)
-            //{
-            //    aster.Update();
-            //    if (bullet != null && aster.Collision(bullet))
-            //    {
-            //        SystemSounds.Beep.Play();
-            //        Debug.WriteLine("Пуля попала в астероид!");
-            //    }
-            //}
-
             for (int i = 0; i < asteroids.Length; i++)
             {
                 asteroids[i].Update();
@@ -126,7 +107,7 @@ namespace Pract.classes
                 {
                     SystemSounds.Beep.Play();
                     bullet = null;
-                    asteroids[i] = GenerateAsteroid(rnd);
+                    asteroids[i] = GenerateBorderAsteroid(rnd);
                     Debug.WriteLine("Пуля попала в астероид!");
                 }
             }
@@ -143,6 +124,18 @@ namespace Pract.classes
             var sizeY = rnd.Next(20, 40);
             var posX = rnd.Next(0, Width);
             var posY = rnd.Next(0, Height);
+            var dirX = rnd.Next(1, 20);
+            var dirY = rnd.Next(1, 20);
+
+            return new Asteroid(new Point(posX, posY), new Point(dirX, dirY), new Size(sizeX, sizeY));
+        }
+
+        private static BaseObject GenerateBorderAsteroid(Random rnd)
+        {
+            var sizeX = rnd.Next(20, 40);
+            var sizeY = rnd.Next(20, 40);
+            var posX = rnd.Next(2, sizeX);
+            var posY = rnd.Next(2, sizeY);
             var dirX = rnd.Next(1, 20);
             var dirY = rnd.Next(1, 20);
 
