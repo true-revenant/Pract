@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Pract.classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,6 +18,11 @@ namespace Pract
             //Application.EnableVisualStyles();
             //Application.SetCompatibleTextRenderingDefault(false);
             //Application.Run(new GameForm());
+
+            var gameForm = new GameForm();
+            Game.Init(gameForm);
+            Game.Draw();
+            Application.Run(gameForm);
         }
     }
 }
