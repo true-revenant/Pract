@@ -10,5 +10,6 @@ namespace Pract
 {
     static class Game
     {
+
     }
 }
