@@ -55,7 +55,7 @@ namespace Pract.classes
         {
             if (e.KeyCode == Keys.ControlKey)
             {
-                bullet = new Bullet(new Point(50, 200), new Point(1, 0), new Size(20, 5));
+                bullet = new Bullet(new Point(50, 200), new Point(1, 0), new Size(50, 20));
             }
         }
 
@@ -122,8 +122,8 @@ namespace Pract.classes
         {
             var sizeX = rnd.Next(20, 40);
             var sizeY = rnd.Next(20, 40);
-            var posX = rnd.Next(0, Width);
-            var posY = rnd.Next(0, Height);
+            var posX = rnd.Next(sizeX, Width - sizeX);
+            var posY = rnd.Next(sizeY, Height - sizeY);
             var dirX = rnd.Next(1, 20);
             var dirY = rnd.Next(1, 20);
 
@@ -134,12 +134,11 @@ namespace Pract.classes
         {
             var sizeX = rnd.Next(20, 40);
             var sizeY = rnd.Next(20, 40);
-            var posX = rnd.Next(2, sizeX);
-            var posY = rnd.Next(2, sizeY);
+            var posY = rnd.Next(sizeY, Height - sizeY);
             var dirX = rnd.Next(1, 20);
             var dirY = rnd.Next(1, 20);
 
-            return new Asteroid(new Point(posX, posY), new Point(dirX, dirY), new Size(sizeX, sizeY));
+            return new Asteroid(new Point(sizeX / 2, posY), new Point(dirX, dirY), new Size(sizeX, sizeY));
         }
 
         private static BaseObject GenerateStar(Random rnd)

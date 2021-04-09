@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Pract.Properties;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -13,7 +14,8 @@ namespace Pract.classes
 
         public override void Draw()
         {
-            Game.buffer.Graphics.FillRectangle(Brushes.Red, new Rectangle(position.X, position.Y, size.Width, size.Height));
+            //Game.buffer.Graphics.FillRectangle(Brushes.Red, new Rectangle(position.X, position.Y, size.Width, size.Height));
+            Game.buffer.Graphics.DrawImage(Resources.bullet, new Rectangle(position.X, position.Y, size.Width, size.Height));
         }
 
         public override void Update()
