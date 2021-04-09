@@ -19,7 +19,7 @@ namespace Pract.classes
 
         public override void Update()
         {
-            position.X += 20;
+            position.X += 40;
         }
     }
 }

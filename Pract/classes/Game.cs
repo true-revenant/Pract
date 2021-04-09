@@ -16,6 +16,8 @@ namespace Pract.classes
 
     static class Game
     {
+        #region private fields
+
         static BufferedGraphicsContext context;
         static int points;
         static BaseObject[] asteroids;
@@ -28,30 +30,42 @@ namespace Pract.classes
         static Timer timer;
         static bool healthBoxIsGenerated = false;
 
-        public static BufferedGraphics buffer;
+        static Brush heathLineBrush;
+        static Pen heathLinePen;
+        static float heathLineLength = 100;
+        static int damage = 2;
+        static int healthImpact = 20;
 
+        #endregion
+
+        #region Public Fields
+
+        public static BufferedGraphics buffer;
         public static int Width { get; set; }
         public static int Height { get; set; }
 
+        #endregion
+
         static Game() { }
+
+        #region Public Methods
 
         public static void Init(Form form)
         {
-            Graphics g;
             context = BufferedGraphicsManager.Current;
-            g = form.CreateGraphics();
+            Graphics g = form.CreateGraphics();
             
             Width = form.ClientSize.Width;
             Height = form.ClientSize.Height;
 
-            if (Width >= 1000 || Width < 0 || Height >= 1000 || Height < 0) throw new ArgumentOutOfRangeException();
+            if (Width >= 1500 || Width < 0 || Height >= 1500 || Height < 0) throw new ArgumentOutOfRangeException();
 
             buffer = context.Allocate(g, new Rectangle(0, 0, Width, Height));
 
             LoadGameScene();
             points = 0;
 
-            timer = new Timer() { Interval = 40 };
+            timer = new Timer() { Interval = 20 };
             timer.Tick += Timer_OnTick;
             timer.Start();
 
@@ -78,16 +92,36 @@ namespace Pract.classes
 
             ship.Draw();
             
+            // отрисовка строки с отображением очков за сбитые астероиды
             buffer.Graphics.DrawString($"Points: {points}", 
-                new Font(FontFamily.GenericMonospace, 15), Brushes.YellowGreen, new Point(Width - 180, Height - 25));
+                new Font(FontFamily.GenericMonospace, 10), Brushes.YellowGreen, new Point(Width - 180, Height - 25));
+
+            if (ship.Enegry < 50)
+            {
+                heathLineBrush = Brushes.Red;
+                heathLinePen = Pens.Red;
+            }
+            else
+            {
+                heathLineBrush = Brushes.Green;
+                heathLinePen = Pens.Green;
+            }
+            // полоска здоровья корабля
+            buffer.Graphics.DrawRectangle(heathLinePen, new Rectangle(new Point(Width - 180, Height - 50), new Size(103, 20)));
+            buffer.Graphics.FillRectangle(heathLineBrush, new RectangleF(new Point(Width - 178, Height - 48), new SizeF(heathLineLength, 17)));
+            // строка здоровья корабля
             buffer.Graphics.DrawString($"Health: {ship.Enegry}",
-                new Font(FontFamily.GenericMonospace, 15), Brushes.Red, new Point(Width - 180, Height - 50));
+                new Font(FontFamily.GenericMonospace, 10), heathLineBrush, new Point(Width - 180, Height - 65));
 
             if (bullet != null) bullet.Draw();
             if (healthBox != null) healthBox.Draw();
 
             buffer.Render();
         }
+
+        #endregion
+
+        #region Private Methods
 
         private static void LoadGameScene()
         {
@@ -106,7 +140,7 @@ namespace Pract.classes
             ship.MessageOnDeath += Ship_MessageOnDeath;
         }
 
-        public static void Update()
+        private static void Update()
         {
             for (int i = 0; i < asteroids.Length; i++)
             {
@@ -116,8 +150,7 @@ namespace Pract.classes
                 if (bullet != null && asteroids[i].Collision(bullet))
                 {
                     LogAction(DebugLog, $"Пуля попала в астероид! координаты попадания = [{bullet.Rect.X}, {bullet.Rect.Y}]");
-                    LogAction(LogFile, $"Пуля попала в астероид! координаты попадания = [{bullet.Rect.X}, {bullet.Rect.Y}]");      
-                    
+                    LogAction(LogFile, $"Пуля попала в астероид! координаты попадания = [{bullet.Rect.X}, {bullet.Rect.Y}]");
                     bullet = null;
                     points += 10;
                     asteroids[i] = GenerateBorderAsteroid(rnd);
@@ -128,7 +161,9 @@ namespace Pract.classes
                 // попадание астероида в корабль
                 if (asteroids[i].Collision(ship))
                 {
-                    ship.Enegry -= 2;
+                    ship.Enegry -= damage;
+                    heathLineLength -= damage;
+                    //heathLineLength -= 122 / 100 * damage;
                     //Debug.WriteLine($"Астероид угодил в корабль! Здоровье = {ship.Enegry}");
                     LogAction(DebugLog, $"Астероид угодил в корабль! Здоровье = {ship.Enegry}");
                     LogAction(LogFile, $"Астероид угодил в корабль! Здоровье = {ship.Enegry}");
@@ -151,8 +186,8 @@ namespace Pract.classes
 
         private static BaseObject GenerateAsteroid(Random rnd)
         {
-            var sizeX = rnd.Next(20, 40);
-            var sizeY = rnd.Next(20, 40);
+            var sizeX = rnd.Next(30, 50);
+            var sizeY = rnd.Next(30, 50);
             var posX = rnd.Next(sizeX, Width - sizeX);
             var posY = rnd.Next(sizeY, Height - sizeY);
             var dirX = rnd.Next(1, 20);
@@ -169,7 +204,7 @@ namespace Pract.classes
             var dirX = rnd.Next(1, 20);
             var dirY = rnd.Next(1, 20);
 
-            return new Asteroid(new Point(sizeX / 2, posY), new Point(dirX, dirY), new Size(sizeX, sizeY));
+            return new Asteroid(new Point(Width - sizeX, posY), new Point(dirX, dirY), new Size(sizeX, sizeY));
         }
 
         private static BaseObject GenerateStar(Random rnd)
@@ -205,7 +240,7 @@ namespace Pract.classes
             timer.Stop();
             //buffer.Graphics.DrawString("Game Over",
             //    new Font(FontFamily.GenericSansSerif, 60, FontStyle.Bold), Brushes.Orange, new Point(150, 200));
-            buffer.Graphics.DrawImage(Resources.game_over, new Rectangle(300, 200, 200, 100));
+            buffer.Graphics.DrawImage(Resources.game_over, new Rectangle(400, 300, 200, 100));
             buffer.Render();
 
             LogAction(DebugLog, $"ИГРА ЗАВЕРШЕНА! Очков набрано {points}");
@@ -234,9 +269,13 @@ namespace Pract.classes
                     ship.Right();
                     break;
             }
+
             if (healthBox != null && ship.Collision(healthBox))
             {
-                ship.Enegry += 20;
+                ship.Enegry += healthImpact;
+                heathLineLength += healthImpact;
+                //heathLineLength += 122 / 100 * healthImpact;
+                //if (heathLineLength > 122) heathLineLength = 122;
                 healthBox = null;
                 healthBoxIsGenerated = false;
             }
@@ -248,6 +287,7 @@ namespace Pract.classes
             Update();
         }
 
+        // БЛОК ЛОГИКИ ЛОГИРОВАНИЯ
         private static void LogAction(LogDelegate logF, string log_str) { logF(log_str); }
         private static void DebugLog(string log_str) { Debug.WriteLine(log_str); }
         private static void LogFile(string log_str)
@@ -257,5 +297,7 @@ namespace Pract.classes
                 stream.WriteLine(log_str);
             }
         }
+
+        #endregion
     }
 }
