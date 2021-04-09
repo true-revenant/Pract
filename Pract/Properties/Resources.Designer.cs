@@ -63,6 +63,16 @@ namespace Pract.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap background {
+            get {
+                object obj = ResourceManager.GetObject("background", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap background_2 {
             get {
                 object obj = ResourceManager.GetObject("background_2", resourceCulture);
@@ -76,6 +86,36 @@ namespace Pract.Properties {
         internal static System.Drawing.Bitmap bullet {
             get {
                 object obj = ResourceManager.GetObject("bullet", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap game_over {
+            get {
+                object obj = ResourceManager.GetObject("game_over", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap health_box {
+            get {
+                object obj = ResourceManager.GetObject("health_box", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap health_box_2 {
+            get {
+                object obj = ResourceManager.GetObject("health_box_2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -126,6 +166,16 @@ namespace Pract.Properties {
         internal static System.Drawing.Bitmap planet {
             get {
                 object obj = ResourceManager.GetObject("planet", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ship {
+            get {
+                object obj = ResourceManager.GetObject("ship", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

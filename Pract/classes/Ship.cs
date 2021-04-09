@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Pract.Properties;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -9,28 +10,33 @@ namespace Pract.classes
 {
     class Ship : BaseObject
     {
-        int Enegry { get; set; }
+        public int Enegry { get; set; }
 
-        public static event EventHandler MessageOnDeath;
+        public event EventHandler MessageOnDeath;
 
         public Ship(Point pos, Point dir, Size size) : base(pos, dir, size)
         {
             Enegry = 100;
         }
 
-        public void EnergyDecrease(int val)
-        {
-            Enegry -= val;
-        }
-
         public void Up()
         {
-
+            if (position.Y >= 40) position.Y -= 10;
         }
 
         public void Down()
         {
+            if (position.Y <= Game.Height - 40) position.Y += 10;
+        }
 
+        public void Left()
+        {
+            if (position.X >= 40) position.X -= 10;
+        }
+
+        public void Right()
+        {
+            if (position.X <= Game.Width - 40) position.X += 10;
         }
 
         public void Die()
@@ -40,7 +46,7 @@ namespace Pract.classes
 
         public override void Draw()
         {
-            throw new NotImplementedException();
+            Game.buffer.Graphics.DrawImage(Resources.ship, new Rectangle(position, size));
         }
 
         public override void Update() {}

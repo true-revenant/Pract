@@ -14,13 +14,12 @@ namespace Pract.classes
 
         public override void Draw()
         {
-            //Game.buffer.Graphics.FillRectangle(Brushes.Red, new Rectangle(position.X, position.Y, size.Width, size.Height));
-            Game.buffer.Graphics.DrawImage(Resources.bullet, new Rectangle(position.X, position.Y, size.Width, size.Height));
+            Game.buffer.Graphics.DrawImage(Resources.bullet, new Rectangle(position, size));
         }
 
         public override void Update()
         {
-            position.X += 10;
+            position.X += 20;
         }
     }
 }
