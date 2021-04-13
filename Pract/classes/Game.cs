@@ -13,18 +13,20 @@ using System.Windows.Forms;
 namespace Pract.classes
 {
     public delegate void LogDelegate(string log_str);
-
     static class Game
     {
         #region private fields
 
         static BufferedGraphicsContext context;
         static int points;
-        static BaseObject[] asteroids;
-        static BaseObject[] stars;
-        static BaseObject[] comets;
-        static Bullet bullet;
-        //static List<Bullet> bullets;
+
+        static Star[] stars;
+        static Comet[] comets;
+
+        static List<Bullet> bullets = new List<Bullet>();
+        static List<Asteroid> asteroids = new List<Asteroid>();
+
+        static WaveString waveString;
         static Ship ship;
         static HealthBox healthBox;
         static Timer timer;
@@ -35,6 +37,8 @@ namespace Pract.classes
         static float heathLineLength = 100;
         static int damage = 2;
         static int healthImpact = 20;
+        static int countOfAsteroids = 15;
+        static int countOfWaves = 1;
 
         #endregion
 
@@ -109,12 +113,28 @@ namespace Pract.classes
             // полоска здоровья корабля
             buffer.Graphics.DrawRectangle(heathLinePen, new Rectangle(new Point(Width - 180, Height - 50), new Size(103, 20)));
             buffer.Graphics.FillRectangle(heathLineBrush, new RectangleF(new Point(Width - 178, Height - 48), new SizeF(heathLineLength, 17)));
-            // строка здоровья корабля
-            buffer.Graphics.DrawString($"Health: {ship.Enegry}",
-                new Font(FontFamily.GenericMonospace, 10), heathLineBrush, new Point(Width - 180, Height - 65));
+            //// строка здоровья корабля
+            //buffer.Graphics.DrawString($"Health: {ship.Enegry}",
+            //    new Font(FontFamily.GenericMonospace, 10), heathLineBrush, new Point(Width - 180, Height - 65));
 
-            if (bullet != null) bullet.Draw();
+            foreach (var bullet in bullets)
+                bullet.Draw();
+
+            // отрисовка пуль и удаление их если они ушли за пределы экрана
+            for (int i = 0; i < bullets.Count; i++)
+            {
+                if (bullets[i].Rect.X > Width)
+                {
+                    bullets.RemoveAt(i);
+                    i++;
+                }
+                else bullets[i].Draw();
+            }
+
             if (healthBox != null) healthBox.Draw();
+
+            if (waveString != null && waveString.Rect.X <= Width) waveString.Draw();
+            else waveString = null;
 
             buffer.Render();
         }
@@ -127,8 +147,11 @@ namespace Pract.classes
         {
             var rnd = new Random();
 
-            asteroids = new Asteroid[15];
-            for (int i = 0; i < asteroids.Length; i++) asteroids[i] = GenerateAsteroid(rnd);
+            for (int i = 0; i < countOfAsteroids; i++)
+                asteroids.Add(GenerateAsteroid(rnd));
+
+            //asteroids = new Asteroid[15];
+            //for (int i = 0; i < asteroids.Length; i++) asteroids[i] = GenerateAsteroid(rnd);
 
             stars = new Star[60];
             for (int i = 0; i < stars.Length; i++) stars[i] = GenerateStar(rnd);
@@ -138,33 +161,32 @@ namespace Pract.classes
 
             ship = new Ship(new Point(20, Height / 2), new Point(0, 0), new Size(50, 50));
             ship.MessageOnDeath += Ship_MessageOnDeath;
+
+            GenerateWaveString();
         }
 
         private static void Update()
         {
-            for (int i = 0; i < asteroids.Length; i++)
+            for (int i = 0; i < asteroids.Count; i++)
             {
-                // попадание пули в астероид
                 asteroids[i].Update();
-                Random rnd = new Random();
-                if (bullet != null && asteroids[i].Collision(bullet))
-                {
-                    LogAction(DebugLog, $"Пуля попала в астероид! координаты попадания = [{bullet.Rect.X}, {bullet.Rect.Y}]");
-                    LogAction(LogFile, $"Пуля попала в астероид! координаты попадания = [{bullet.Rect.X}, {bullet.Rect.Y}]");
-                    bullet = null;
-                    points += 10;
-                    asteroids[i] = GenerateBorderAsteroid(rnd);
-                    //Debug.WriteLine($"Пуля попала в астероид! координаты попадания = [{bullet.Rect.X}, {bullet.Rect.Y}]");
 
-                }
+                //if (bullet != null && asteroids[i].Collision(bullet))
+                //{
+                //    LogAction(DebugLog, $"Пуля попала в астероид! координаты попадания = [{bullet.Rect.X}, {bullet.Rect.Y}]");
+                //    LogAction(LogFile, $"Пуля попала в астероид! координаты попадания = [{bullet.Rect.X}, {bullet.Rect.Y}]");
+                //    bullet = null;
+                //    points += 10;
+                //    asteroids[i] = GenerateBorderAsteroid(rnd);
+                //    //Debug.WriteLine($"Пуля попала в астероид! координаты попадания = [{bullet.Rect.X}, {bullet.Rect.Y}]");
+                //}
 
                 // попадание астероида в корабль
                 if (asteroids[i].Collision(ship))
                 {
                     ship.Enegry -= damage;
                     heathLineLength -= damage;
-                    //heathLineLength -= 122 / 100 * damage;
-                    //Debug.WriteLine($"Астероид угодил в корабль! Здоровье = {ship.Enegry}");
+
                     LogAction(DebugLog, $"Астероид угодил в корабль! Здоровье = {ship.Enegry}");
                     LogAction(LogFile, $"Астероид угодил в корабль! Здоровье = {ship.Enegry}");
 
@@ -175,16 +197,54 @@ namespace Pract.classes
                         healthBoxIsGenerated = true;
                     }
                 }
+
+                // попадание пули в астероид
+                Random rnd = new Random();
+
+                for (int j = 0; j < bullets.Count; j++)
+                {
+                    if (bullets[j].Collision(asteroids[i]))
+                    {
+                        if (asteroids.Count > 1)
+                        {
+                            LogAction(DebugLog, $"Пуля попала в астероид! координаты попадания = [{bullets[j].Rect.X}, {bullets[j].Rect.Y}]");
+                            LogAction(LogFile, $"Пуля попала в астероид! координаты попадания = [{bullets[j].Rect.X}, {bullets[j].Rect.Y}]");
+                            points += 10;
+                            bullets.RemoveAt(j);
+                            j--;
+                            asteroids.RemoveAt(i);
+                            if (i > 0) i--;
+                        }
+                        else
+                        {
+                            asteroids[i] = GenerateBorderAsteroid(rnd);
+                            for (int k = 0; k < countOfAsteroids; k++)
+                                asteroids.Add(GenerateAsteroid(rnd));
+                            countOfAsteroids++;
+                            countOfWaves++;
+                            GenerateWaveString();
+                            break;
+                        }
+                    }
+                }
             }
-            
+
             foreach (var star in stars) star.Update();
             foreach (var comet in comets) comet.Update();
             
-            if (bullet != null) bullet.Update();
+            //if (bullet != null) bullet.Update();
+            foreach (var bullet in bullets) bullet.Update();
+            
             ship.Update();
+            if (waveString != null) waveString.Update();
         }
 
-        private static BaseObject GenerateAsteroid(Random rnd)
+        private static void GenerateWaveString()
+        {
+            waveString = new WaveString(new Point(-100, Height - 100), new Point(0, 0), new Size(100, 20), $"Волна {countOfWaves}");
+        }
+
+        private static Asteroid GenerateAsteroid(Random rnd)
         {
             var sizeX = rnd.Next(30, 50);
             var sizeY = rnd.Next(30, 50);
@@ -196,7 +256,7 @@ namespace Pract.classes
             return new Asteroid(new Point(posX, posY), new Point(dirX, dirY), new Size(sizeX, sizeY));
         }
 
-        private static BaseObject GenerateBorderAsteroid(Random rnd)
+        private static Asteroid GenerateBorderAsteroid(Random rnd)
         {
             var sizeX = rnd.Next(20, 40);
             var sizeY = rnd.Next(20, 40);
@@ -207,7 +267,7 @@ namespace Pract.classes
             return new Asteroid(new Point(Width - sizeX, posY), new Point(dirX, dirY), new Size(sizeX, sizeY));
         }
 
-        private static BaseObject GenerateStar(Random rnd)
+        private static Star GenerateStar(Random rnd)
         {
             var size = rnd.Next(5, 10);
             var posX = rnd.Next(0, Width);
@@ -216,7 +276,7 @@ namespace Pract.classes
             return new Star(new Point(posX, posY), new Point(0, 0), new Size(size, size));
         }
 
-        private static BaseObject GenerateComet(Random rnd)
+        private static Comet GenerateComet(Random rnd)
         {
             var posX = rnd.Next(0, Width);
             var posY = rnd.Next(0, Height);
@@ -254,7 +314,9 @@ namespace Pract.classes
             switch (e.KeyCode)
             {
                 case Keys.ControlKey:
-                    bullet = new Bullet(new Point(ship.Rect.X + 30, ship.Rect.Y + 15), new Point(1, 0), new Size(50, 20));
+                    //bullet = new Bullet(new Point(ship.Rect.X + 30, ship.Rect.Y + 15), new Point(1, 0), new Size(50, 20));
+                    if (bullets.Count < 6)
+                        bullets.Add(new Bullet(new Point(ship.Rect.X + 30, ship.Rect.Y + 15), new Point(1, 0), new Size(50, 20)));
                     break;
                 case Keys.Up:
                     ship.Up();

@@ -54,6 +54,7 @@
     <Compile Include="classes\HealthBox.cs" />
     <Compile Include="classes\Ship.cs" />
     <Compile Include="classes\Star.cs" />
+    <Compile Include="classes\WaveString.cs" />
     <Compile Include="GameForm.cs">
       <SubType>Form</SubType>
     </Compile>
