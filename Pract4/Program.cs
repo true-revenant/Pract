@@ -32,7 +32,11 @@ namespace Pract4
             Console.WriteLine("******************************");
             Task2c(intList);
 
-            //Task3();
+            Console.WriteLine();
+
+            Console.WriteLine("Задание 3 a");
+            Console.WriteLine("******************************");
+            Task3a();
             Console.ReadKey();
         }
 
@@ -82,7 +86,7 @@ namespace Pract4
                 Console.WriteLine($"Элемент {d.Key} , кол-во в коллекции - {d.Value}");
         }
 
-        static void Task3()
+        static void Task3a()
         {
             Dictionary<string, int> dict = new Dictionary<string, int>()
               {
@@ -91,7 +95,7 @@ namespace Pract4
                 { "one",1 },
                 {"three",3 },
               };
-            var d = dict.OrderBy(delegate (KeyValuePair<string, int> pair) { return pair.Value; });
+            var d = dict.OrderBy(x => x.Value);
 
             foreach (var pair in dict)
                 Console.WriteLine("{0} - {1}", pair.Key, pair.Value);
