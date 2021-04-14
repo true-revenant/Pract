@@ -1,0 +1,10 @@
+F:\VS_projects\Geek Brains\2_Basics\Pract\Pract\bin\Debug\Pract.exe.config
+F:\VS_projects\Geek Brains\2_Basics\Pract\Pract\bin\Debug\Pract.exe
+F:\VS_projects\Geek Brains\2_Basics\Pract\Pract\bin\Debug\Pract.pdb
+F:\VS_projects\Geek Brains\2_Basics\Pract\Pract\obj\Debug\Game.csprojAssemblyReference.cache
+F:\VS_projects\Geek Brains\2_Basics\Pract\Pract\obj\Debug\Pract.GameForm.resources
+F:\VS_projects\Geek Brains\2_Basics\Pract\Pract\obj\Debug\Pract.Properties.Resources.resources
+F:\VS_projects\Geek Brains\2_Basics\Pract\Pract\obj\Debug\Game.csproj.GenerateResource.cache
+F:\VS_projects\Geek Brains\2_Basics\Pract\Pract\obj\Debug\Game.csproj.CoreCompileInputs.cache
+F:\VS_projects\Geek Brains\2_Basics\Pract\Pract\obj\Debug\Pract.exe
+F:\VS_projects\Geek Brains\2_Basics\Pract\Pract\obj\Debug\Pract.pdb
