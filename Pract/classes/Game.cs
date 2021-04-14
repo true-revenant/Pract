@@ -19,6 +19,7 @@ namespace Pract.classes
 
         static BufferedGraphicsContext context;
         static int points;
+        static Form gForm;
 
         static Star[] stars;
         static Comet[] comets;
@@ -26,19 +27,25 @@ namespace Pract.classes
         static List<Bullet> bullets = new List<Bullet>();
         static List<Asteroid> asteroids = new List<Asteroid>();
 
-        static WaveString waveString;
+        static TextObject waveString;
+        static TextObject pauseString;
+        static TextObject restartString;
+        static TextObject resultString;
         static Ship ship;
         static HealthBox healthBox;
         static Timer timer;
         static bool healthBoxIsGenerated = false;
+        static bool gameIsPaused = false;
+        static bool gameIsEnded = false;
 
         static Brush heathLineBrush;
         static Pen heathLinePen;
-        static float heathLineLength = 100;
+        static float heathLineLength;
         static int damage = 2;
         static int healthImpact;
         static int countOfAsteroids = 15;
         static int countOfWaves = 1;
+        static string resultText;
 
         #endregion
 
@@ -56,11 +63,12 @@ namespace Pract.classes
 
         public static void Init(Form form)
         {
+            gForm = form;
             context = BufferedGraphicsManager.Current;
-            Graphics g = form.CreateGraphics();
+            Graphics g = gForm.CreateGraphics();
             
-            Width = form.ClientSize.Width;
-            Height = form.ClientSize.Height;
+            Width = gForm.ClientSize.Width;
+            Height = gForm.ClientSize.Height;
 
             if (Width >= 1500 || Width < 0 || Height >= 1500 || Height < 0) throw new ArgumentOutOfRangeException();
 
@@ -73,7 +81,7 @@ namespace Pract.classes
             timer.Tick += Timer_OnTick;
             timer.Start();
 
-            form.KeyDown += Form_KeyDown;
+            gForm.KeyDown += Form_KeyDown;
 
             LogAction(DebugLog, "ИГРА НАЧАТА!!");
             LogAction(DebugLog, "*********************************************************************");
@@ -113,9 +121,6 @@ namespace Pract.classes
             // полоска здоровья корабля
             buffer.Graphics.DrawRectangle(heathLinePen, new Rectangle(new Point(Width - 180, Height - 50), new Size(103, 20)));
             buffer.Graphics.FillRectangle(heathLineBrush, new RectangleF(new Point(Width - 178, Height - 48), new SizeF(heathLineLength, 17)));
-            //// строка здоровья корабля
-            //buffer.Graphics.DrawString($"Health: {ship.Enegry}",
-            //    new Font(FontFamily.GenericMonospace, 10), heathLineBrush, new Point(Width - 180, Height - 65));
 
             foreach (var bullet in bullets)
                 bullet.Draw();
@@ -135,6 +140,10 @@ namespace Pract.classes
 
             if (waveString != null && waveString.Rect.X <= Width) waveString.Draw();
             else waveString = null;
+
+            if (pauseString != null) pauseString.Draw();
+            if (restartString != null) restartString.Draw();
+            if (resultString != null) resultString.Draw();
 
             buffer.Render();
         }
@@ -157,6 +166,7 @@ namespace Pract.classes
 
             ship = new Ship(new Point(20, Height / 2), new Point(0, 0), new Size(50, 50));
             ship.MessageOnDeath += Ship_MessageOnDeath;
+            heathLineLength = 100;
 
             GenerateWaveString();
         }
@@ -227,7 +237,6 @@ namespace Pract.classes
 
             foreach (var star in stars) star.Update();
             foreach (var comet in comets) comet.Update();
-            
             foreach (var bullet in bullets) bullet.Update();
             
             ship.Update();
@@ -236,7 +245,22 @@ namespace Pract.classes
 
         private static void GenerateWaveString()
         {
-            waveString = new WaveString(new Point(-100, Height - 100), new Point(0, 0), new Size(100, 20), $"Волна {countOfWaves}");
+            waveString = new TextObject(new Point(-100, Height - 100), new Point(0, 0), new Size(100, 20), $"Волна {countOfWaves}", OutputTextType.WaveStringText);
+        }
+
+        private static void GeneratePauseString()
+        {
+            pauseString = new TextObject(new Point(450, 350), new Point(0, 0), new Size(100, 20), "Пауза", OutputTextType.PauseText);
+        }
+
+        private static void GenerateRestartString()
+        {
+            restartString = new TextObject(new Point(280, 480), new Point(0, 0), new Size(200, 20), "Чтобы начать заново нажмите Enter", OutputTextType.ForRestartText);
+        }
+
+        private static void GenerateResultString()
+        {
+            resultString = new TextObject(new Point(280, 450), new Point(0, 0), new Size(100, 20), resultText, OutputTextType.ResultText);
         }
 
         private static Asteroid GenerateAsteroid(Random rnd)
@@ -292,16 +316,21 @@ namespace Pract.classes
 
         private static void Ship_MessageOnDeath(object sender, EventArgs e)
         {
+            BestResultLogAndSet();
+            GenerateRestartString();
+            GenerateResultString();
+            Draw();
             timer.Stop();
-            //buffer.Graphics.DrawString("Game Over",
-            //    new Font(FontFamily.GenericSansSerif, 60, FontStyle.Bold), Brushes.Orange, new Point(150, 200));
+            
             buffer.Graphics.DrawImage(Resources.game_over, new Rectangle(400, 300, 200, 100));
+            buffer.Graphics.DrawImage(Resources.explosion, ship.Rect);
             buffer.Render();
 
             LogAction(DebugLog, $"ИГРА ЗАВЕРШЕНА! Очков набрано {points}");
             LogAction(DebugLog, "*********************************************************************");
             LogAction(LogFile, $"ИГРА ЗАВЕРШЕНА! Очков набрано {points}");
             LogAction(LogFile, "*********************************************************************");
+            gameIsEnded = true;
         }
 
         private static void Form_KeyDown(object sender, KeyEventArgs e)
@@ -325,6 +354,12 @@ namespace Pract.classes
                 case Keys.Right:
                     ship.Right();
                     break;
+                case Keys.Space:
+                    PauseResumeGame();
+                    break;
+                case Keys.Enter:
+                    RestartGame();
+                    break;
             }
 
             if (healthBox != null && ship.Collision(healthBox))
@@ -346,6 +381,48 @@ namespace Pract.classes
             Update();
         }
 
+        private static void PauseResumeGame()
+        {
+            if (!gameIsEnded)
+            {
+                if (gameIsPaused)
+                {
+                    Debug.WriteLine("Сняли с паузы!");
+                    pauseString = null;
+                    timer.Start();
+                    gameIsPaused = false;
+                }
+                else
+                {
+                    Debug.WriteLine("Поставили на паузу!");
+                    GeneratePauseString();
+                    timer.Stop();
+                    Draw();
+                    gameIsPaused = true;
+                }
+            }
+        }
+
+        private static void RestartGame()
+        {
+            if (gameIsEnded)
+            {
+                gameIsEnded = false;
+                healthBoxIsGenerated = false;
+                countOfAsteroids = 15;
+                countOfWaves = 1;
+                asteroids.Clear();
+                healthBox = null;
+                restartString = null;
+                resultString = null;
+                heathLineLength = 100;
+                
+                buffer.Graphics.Clear(Color.Black);
+                Init(gForm);
+                Draw();
+            }
+        }
+
         // БЛОК ЛОГИКИ ЛОГИРОВАНИЯ
         private static void LogAction(LogDelegate logF, string log_str) { logF(log_str); }
         private static void DebugLog(string log_str) { Debug.WriteLine(log_str); }
@@ -355,6 +432,27 @@ namespace Pract.classes
             {
                 stream.WriteLine(log_str);
             }
+        }
+        private static void BestResultLogAndSet()
+        {
+            int prevScore = 0;
+            if (File.Exists(AppDomain.CurrentDomain.BaseDirectory + "bestScoreLog.txt"))
+            {
+                using (var stream = new StreamReader(AppDomain.CurrentDomain.BaseDirectory + "bestScoreLog.txt"))
+                {
+                    prevScore = Int32.Parse(stream.ReadLine());
+                }
+            }
+            if (points > prevScore)
+            {
+                using (var stream = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + "bestScoreLog.txt", false))
+                {
+                    stream.WriteLine(points);
+                }
+                resultText = $"Вы установили новый рекорд - {points}!";
+            }
+            else if (points == prevScore) resultText = $"Вы повторили лучши результат!";
+            else resultText = $"Ваш результат - {points}!";
         }
 
         #endregion

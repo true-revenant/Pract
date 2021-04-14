@@ -28,15 +28,5 @@ namespace Pract
             Game.Draw();
             Application.Run(gameForm);
         }
-
-        private static void Program_spacePressed(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Space)
-            {
-                gameForm = new GameForm();
-                Game.Init(gameForm);
-                Game.Draw();
-            }
-        }
     }
 }
