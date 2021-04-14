@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31129.286
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game", "Pract\Game.csproj", "{45C4615F-CFBE-4395-80FB-A2ECFCF0DB6A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HumanResources", "HumanResources\HumanResources.csproj", "{92E4D65F-F68A-4269-A8E5-CA9138B6BDC4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pract2", "HumanResources\Pract2.csproj", "{92E4D65F-F68A-4269-A8E5-CA9138B6BDC4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pract4", "Pract4\Pract4.csproj", "{E651A36E-0A4C-458F-911C-1D35B53BCE83}"
 EndProject

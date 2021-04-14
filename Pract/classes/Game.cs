@@ -36,7 +36,7 @@ namespace Pract.classes
         static Pen heathLinePen;
         static float heathLineLength = 100;
         static int damage = 2;
-        static int healthImpact = 20;
+        static int healthImpact;
         static int countOfAsteroids = 15;
         static int countOfWaves = 1;
 
@@ -329,6 +329,8 @@ namespace Pract.classes
 
             if (healthBox != null && ship.Collision(healthBox))
             {
+                healthImpact = new Random().Next(20, 50);
+                
                 ship.Enegry += healthImpact;
                 heathLineLength += healthImpact;
                 //heathLineLength += 122 / 100 * healthImpact;
