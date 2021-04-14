@@ -40,8 +40,6 @@ namespace Pract.classes
 
     public class GameObjectException : Exception
     {
-        public GameObjectException(string message) : base(message)
-        {
-        }
+        public GameObjectException(string message) : base(message) {}
     }
 }

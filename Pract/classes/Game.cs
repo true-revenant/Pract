@@ -147,11 +147,7 @@ namespace Pract.classes
         {
             var rnd = new Random();
 
-            for (int i = 0; i < countOfAsteroids; i++)
-                asteroids.Add(GenerateAsteroid(rnd));
-
-            //asteroids = new Asteroid[15];
-            //for (int i = 0; i < asteroids.Length; i++) asteroids[i] = GenerateAsteroid(rnd);
+            for (int i = 0; i < countOfAsteroids; i++) asteroids.Add(GenerateAsteroid(rnd));
 
             stars = new Star[60];
             for (int i = 0; i < stars.Length; i++) stars[i] = GenerateStar(rnd);
@@ -232,7 +228,6 @@ namespace Pract.classes
             foreach (var star in stars) star.Update();
             foreach (var comet in comets) comet.Update();
             
-            //if (bullet != null) bullet.Update();
             foreach (var bullet in bullets) bullet.Update();
             
             ship.Update();
