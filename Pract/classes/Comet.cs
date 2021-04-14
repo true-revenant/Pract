@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Pract.classes
 {
-    class Comet : Asteroid
+    class Comet : BaseObject
     {
         public Comet(Point pos, Point dir, Size size) : base(pos, dir, size) { }
 
