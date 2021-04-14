@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Media;
 using System.Text;
@@ -11,58 +12,69 @@ using System.Windows.Forms;
 
 namespace Pract.classes
 {
+    public delegate void LogDelegate(string log_str);
+
     static class Game
     {
-        private static BufferedGraphicsContext context;
-        public static BufferedGraphics buffer;
-        
+        #region private fields
+
+        static BufferedGraphicsContext context;
+        static int points;
         static BaseObject[] asteroids;
         static BaseObject[] stars;
         static BaseObject[] comets;
-        
         static Bullet bullet;
+        //static List<Bullet> bullets;
         static Ship ship;
+        static HealthBox healthBox;
         static Timer timer;
+        static bool healthBoxIsGenerated = false;
 
+        static Brush heathLineBrush;
+        static Pen heathLinePen;
+        static float heathLineLength = 100;
+        static int damage = 2;
+        static int healthImpact = 20;
+
+        #endregion
+
+        #region Public Fields
+
+        public static BufferedGraphics buffer;
         public static int Width { get; set; }
         public static int Height { get; set; }
 
+        #endregion
+
         static Game() { }
+
+        #region Public Methods
 
         public static void Init(Form form)
         {
-            Graphics g;
             context = BufferedGraphicsManager.Current;
-            g = form.CreateGraphics();
+            Graphics g = form.CreateGraphics();
             
             Width = form.ClientSize.Width;
             Height = form.ClientSize.Height;
 
-            if (Width >= 1000 || Width < 0 || Height >= 1000 || Height < 0) throw new ArgumentOutOfRangeException();
+            if (Width >= 1500 || Width < 0 || Height >= 1500 || Height < 0) throw new ArgumentOutOfRangeException();
 
             buffer = context.Allocate(g, new Rectangle(0, 0, Width, Height));
 
             LoadGameScene();
+            points = 0;
 
-            timer = new Timer() { Interval = 40 };
+            timer = new Timer() { Interval = 20 };
             timer.Tick += Timer_OnTick;
             timer.Start();
 
             form.KeyDown += Form_KeyDown;
-        }
 
-        private static void Form_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.ControlKey)
-            {
-                bullet = new Bullet(new Point(50, 200), new Point(1, 0), new Size(50, 20));
-            }
-        }
-
-        private static void Timer_OnTick(object sender, EventArgs e)
-        {
-            Draw();
-            Update();
+            LogAction(DebugLog, "ИГРА НАЧАТА!!");
+            LogAction(DebugLog, "*********************************************************************");
+            LogAction(LogFile, "ИГРА НАЧАТА!!");
+            LogAction(LogFile, "*********************************************************************");
         }
 
         public static void Draw()
@@ -78,10 +90,38 @@ namespace Pract.classes
             // рисуем астероиды
             foreach (var aster in asteroids) aster.Draw();
 
+            ship.Draw();
+            
+            // отрисовка строки с отображением очков за сбитые астероиды
+            buffer.Graphics.DrawString($"Points: {points}", 
+                new Font(FontFamily.GenericMonospace, 10), Brushes.YellowGreen, new Point(Width - 180, Height - 25));
+
+            if (ship.Enegry < 50)
+            {
+                heathLineBrush = Brushes.Red;
+                heathLinePen = Pens.Red;
+            }
+            else
+            {
+                heathLineBrush = Brushes.Green;
+                heathLinePen = Pens.Green;
+            }
+            // полоска здоровья корабля
+            buffer.Graphics.DrawRectangle(heathLinePen, new Rectangle(new Point(Width - 180, Height - 50), new Size(103, 20)));
+            buffer.Graphics.FillRectangle(heathLineBrush, new RectangleF(new Point(Width - 178, Height - 48), new SizeF(heathLineLength, 17)));
+            // строка здоровья корабля
+            buffer.Graphics.DrawString($"Health: {ship.Enegry}",
+                new Font(FontFamily.GenericMonospace, 10), heathLineBrush, new Point(Width - 180, Height - 65));
+
             if (bullet != null) bullet.Draw();
+            if (healthBox != null) healthBox.Draw();
 
             buffer.Render();
         }
+
+        #endregion
+
+        #region Private Methods
 
         private static void LoadGameScene()
         {
@@ -95,33 +135,59 @@ namespace Pract.classes
 
             comets = new Comet[3];
             for (int i = 0; i < comets.Length; i++) comets[i] = GenerateComet(rnd);
+
+            ship = new Ship(new Point(20, Height / 2), new Point(0, 0), new Size(50, 50));
+            ship.MessageOnDeath += Ship_MessageOnDeath;
         }
 
-        public static void Update()
+        private static void Update()
         {
             for (int i = 0; i < asteroids.Length; i++)
             {
+                // попадание пули в астероид
                 asteroids[i].Update();
                 Random rnd = new Random();
                 if (bullet != null && asteroids[i].Collision(bullet))
                 {
-                    SystemSounds.Beep.Play();
+                    LogAction(DebugLog, $"Пуля попала в астероид! координаты попадания = [{bullet.Rect.X}, {bullet.Rect.Y}]");
+                    LogAction(LogFile, $"Пуля попала в астероид! координаты попадания = [{bullet.Rect.X}, {bullet.Rect.Y}]");
                     bullet = null;
+                    points += 10;
                     asteroids[i] = GenerateBorderAsteroid(rnd);
-                    Debug.WriteLine("Пуля попала в астероид!");
+                    //Debug.WriteLine($"Пуля попала в астероид! координаты попадания = [{bullet.Rect.X}, {bullet.Rect.Y}]");
+
+                }
+
+                // попадание астероида в корабль
+                if (asteroids[i].Collision(ship))
+                {
+                    ship.Enegry -= damage;
+                    heathLineLength -= damage;
+                    //heathLineLength -= 122 / 100 * damage;
+                    //Debug.WriteLine($"Астероид угодил в корабль! Здоровье = {ship.Enegry}");
+                    LogAction(DebugLog, $"Астероид угодил в корабль! Здоровье = {ship.Enegry}");
+                    LogAction(LogFile, $"Астероид угодил в корабль! Здоровье = {ship.Enegry}");
+
+                    if (ship.Enegry < 0) ship.Die();
+                    else if (ship.Enegry <= 50 && !healthBoxIsGenerated)
+                    {
+                        healthBox = (HealthBox)GenerateHealthBox();
+                        healthBoxIsGenerated = true;
+                    }
                 }
             }
             
             foreach (var star in stars) star.Update();
             foreach (var comet in comets) comet.Update();
-
+            
             if (bullet != null) bullet.Update();
+            ship.Update();
         }
 
         private static BaseObject GenerateAsteroid(Random rnd)
         {
-            var sizeX = rnd.Next(20, 40);
-            var sizeY = rnd.Next(20, 40);
+            var sizeX = rnd.Next(30, 50);
+            var sizeY = rnd.Next(30, 50);
             var posX = rnd.Next(sizeX, Width - sizeX);
             var posY = rnd.Next(sizeY, Height - sizeY);
             var dirX = rnd.Next(1, 20);
@@ -138,7 +204,7 @@ namespace Pract.classes
             var dirX = rnd.Next(1, 20);
             var dirY = rnd.Next(1, 20);
 
-            return new Asteroid(new Point(sizeX / 2, posY), new Point(dirX, dirY), new Size(sizeX, sizeY));
+            return new Asteroid(new Point(Width - sizeX, posY), new Point(dirX, dirY), new Size(sizeX, sizeY));
         }
 
         private static BaseObject GenerateStar(Random rnd)
@@ -159,5 +225,79 @@ namespace Pract.classes
 
             return new Comet(new Point(posX, posY), new Point(dirX, dirY), new Size(20, 20));
         }
+
+        private static BaseObject GenerateHealthBox()
+        {
+            Random rnd = new Random();
+            var posX = rnd.Next(30, Width / 2);
+            var posY = rnd.Next(30, Height - 50);
+
+            return new HealthBox(new Point(posX, posY), new Point(0, 0), new Size(20, 20));
+        }
+
+        private static void Ship_MessageOnDeath(object sender, EventArgs e)
+        {
+            timer.Stop();
+            //buffer.Graphics.DrawString("Game Over",
+            //    new Font(FontFamily.GenericSansSerif, 60, FontStyle.Bold), Brushes.Orange, new Point(150, 200));
+            buffer.Graphics.DrawImage(Resources.game_over, new Rectangle(400, 300, 200, 100));
+            buffer.Render();
+
+            LogAction(DebugLog, $"ИГРА ЗАВЕРШЕНА! Очков набрано {points}");
+            LogAction(DebugLog, "*********************************************************************");
+            LogAction(LogFile, $"ИГРА ЗАВЕРШЕНА! Очков набрано {points}");
+            LogAction(LogFile, "*********************************************************************");
+        }
+
+        private static void Form_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.ControlKey:
+                    bullet = new Bullet(new Point(ship.Rect.X + 30, ship.Rect.Y + 15), new Point(1, 0), new Size(50, 20));
+                    break;
+                case Keys.Up:
+                    ship.Up();
+                    break;
+                case Keys.Down:
+                    ship.Down();
+                    break;
+                case Keys.Left:
+                    ship.Left();
+                    break;
+                case Keys.Right:
+                    ship.Right();
+                    break;
+            }
+
+            if (healthBox != null && ship.Collision(healthBox))
+            {
+                ship.Enegry += healthImpact;
+                heathLineLength += healthImpact;
+                //heathLineLength += 122 / 100 * healthImpact;
+                //if (heathLineLength > 122) heathLineLength = 122;
+                healthBox = null;
+                healthBoxIsGenerated = false;
+            }
+        }
+
+        private static void Timer_OnTick(object sender, EventArgs e)
+        {
+            Draw();
+            Update();
+        }
+
+        // БЛОК ЛОГИКИ ЛОГИРОВАНИЯ
+        private static void LogAction(LogDelegate logF, string log_str) { logF(log_str); }
+        private static void DebugLog(string log_str) { Debug.WriteLine(log_str); }
+        private static void LogFile(string log_str)
+        {
+            using (var stream = new StreamWriter(AppDomain.CurrentDomain.BaseDirectory + "log.txt", true))
+            {
+                stream.WriteLine(log_str);
+            }
+        }
+
+        #endregion
     }
 }

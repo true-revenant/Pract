@@ -51,6 +51,7 @@
     <Compile Include="classes\Bullet.cs" />
     <Compile Include="classes\Comet.cs" />
     <Compile Include="classes\Game.cs" />
+    <Compile Include="classes\HealthBox.cs" />
     <Compile Include="classes\Ship.cs" />
     <Compile Include="classes\Star.cs" />
     <Compile Include="GameForm.cs">
@@ -120,6 +121,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\pngegg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ship.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\game-over.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\health_box.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\health_box_2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\explosion.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

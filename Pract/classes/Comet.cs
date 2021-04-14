@@ -15,7 +15,7 @@ namespace Pract.classes
         public override void Draw()
         {
             //Game.buffer.Graphics.FillEllipse(Brushes.White, position.X, position.Y, size.Width, size.Width);
-            Game.buffer.Graphics.DrawImage(Resources.star3, new Rectangle(position.X, position.Y, size.Width, size.Width));
+            Game.buffer.Graphics.DrawImage(Resources.star3, new Rectangle(position, size));
         }
 
         public override void Update()
