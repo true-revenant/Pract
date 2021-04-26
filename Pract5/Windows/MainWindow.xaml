@@ -1,0 +1,30 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Pract5"
+        xmlns:UserControls="clr-namespace:Pract5.UserControls" x:Class="Pract5.MainWindow"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="659.909" Width="1159.451" WindowStartupLocation="CenterScreen">
+    <Grid Margin="0,0,2,4" RenderTransformOrigin="0.446,0.374">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="198*"/>
+            <ColumnDefinition Width="185*"/>
+        </Grid.ColumnDefinitions>
+        <ListView x:Name="employeeListView" Margin="10,10,2,10" Background="#FFEAEAEA" SelectionMode="Single" SelectionChanged="employeeListView_SelectionChanged">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Width="auto" Header="Полное Имя" DisplayMemberBinding="{Binding FullName}"/>
+                    <GridViewColumn Width="100" Header="Возраст" DisplayMemberBinding="{Binding Age}"/>
+                    <GridViewColumn Width="100" Header="Стаж(в годах)" DisplayMemberBinding="{Binding StageYears}"/>
+                    <GridViewColumn Width="auto" Header="Отдел" DisplayMemberBinding="{Binding DepTitle}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <UserControls:EmployeeUserControl x:Name="employeeUserControl" Grid.Column="1" Margin="10,10,0,114"/>
+        <Button x:Name="deleteButton" Content="Удалить" Grid.Column="1" Margin="450,0,10,10" Height="36" VerticalAlignment="Bottom" Click="deleteButton_Click"/>
+        <Button x:Name="editButton" Content="Изменить" Grid.Column="1" HorizontalAlignment="Left" Margin="348,0,0,10" Width="97" Height="36" VerticalAlignment="Bottom" Click="editButton_Click"/>
+        <Button x:Name="addButton" Content="Добавить" Grid.Column="1" HorizontalAlignment="Left" Margin="10,0,0,10" Width="99" Height="36" VerticalAlignment="Bottom" Click="addButton_Click"/>
+    </Grid>
+</Window>
