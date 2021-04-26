@@ -1,0 +1,7 @@
+F:\VS_projects\Geek Brains\2_Basics\Pract\Pract4\bin\Debug\Pract4.exe.config
+F:\VS_projects\Geek Brains\2_Basics\Pract\Pract4\bin\Debug\Pract4.exe
+F:\VS_projects\Geek Brains\2_Basics\Pract\Pract4\bin\Debug\Pract4.pdb
+F:\VS_projects\Geek Brains\2_Basics\Pract\Pract4\obj\Debug\Pract4.csprojAssemblyReference.cache
+F:\VS_projects\Geek Brains\2_Basics\Pract\Pract4\obj\Debug\Pract4.csproj.CoreCompileInputs.cache
+F:\VS_projects\Geek Brains\2_Basics\Pract\Pract4\obj\Debug\Pract4.exe
+F:\VS_projects\Geek Brains\2_Basics\Pract\Pract4\obj\Debug\Pract4.pdb

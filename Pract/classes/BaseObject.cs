@@ -16,7 +16,7 @@ namespace Pract.classes
 
         protected BaseObject(Point pos, Point dir, Size size)
         {
-            if (pos.X < 0 || pos.Y < 0 || size.Width <= 0 || size.Height <= 0) throw new GameObjectException("Некорректно проинициализирван объект на сцене!");
+            //if (pos.X < 0 || pos.Y < 0 || size.Width <= 0 || size.Height <= 0) throw new GameObjectException("Некорректно проинициализирван объект на сцене!");
             
             this.position = pos;
             this.direction = dir;
@@ -40,8 +40,6 @@ namespace Pract.classes
 
     public class GameObjectException : Exception
     {
-        public GameObjectException(string message) : base(message)
-        {
-        }
+        public GameObjectException(string message) : base(message) {}
     }
 }
