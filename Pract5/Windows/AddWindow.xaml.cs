@@ -20,7 +20,7 @@ namespace Pract5.Windows
     /// </summary>
     public partial class AddWindow : Window
     {
-        DepartmentBase dBase;
+        //DepartmentBase dBase;
 
         public AddWindow()
         {
@@ -31,8 +31,7 @@ namespace Pract5.Windows
         {
             InitializeComponent();
             this.Title = "Новый сотрудник";
-            this.dBase = dBase;
-            newEmployUserControl.depsComboBox.ItemsSource = this.dBase.Departments;
+            newEmployUserControl.initDepartmentBase(dBase);
             newEmployUserControl.depsComboBox.SelectedIndex = 0;
         }
 
@@ -44,11 +43,6 @@ namespace Pract5.Windows
         private void addButton_Click(object sender, RoutedEventArgs e)
         {
             MainWindow main = (MainWindow)Owner;
-
-            //Employee empl = new Employee(newEmployUserControl.nameTextBox.Text,
-            //                          newEmployUserControl.lastnameTextBox.Text, 30,
-            //                          (bool)newEmployUserControl.activeCheckBox.IsChecked, Int32.Parse(newEmployUserControl.stageTextBox.Text),
-            //                          (Department)newEmployUserControl.depsComboBox.SelectedItem);
 
             main.AddEmployeeToBase(new Employee(newEmployUserControl.nameTextBox.Text,
                                       newEmployUserControl.lastnameTextBox.Text, 30,

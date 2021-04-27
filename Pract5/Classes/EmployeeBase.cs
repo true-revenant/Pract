@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,7 +9,7 @@ namespace Pract5.Classes
 {
     public class EmployeeBase
     {
-        public List<Employee> Employees { get; set; }
+        public ObservableCollection<Employee> Employees { get; set; }
 
         private readonly int CHAR_MIN = 65;
         private readonly int CHAR_MAX = 90;
@@ -24,17 +25,15 @@ namespace Pract5.Classes
 
         private void GenerateList(int count)
         {
-            Employees = new List<Employee>();
+            Employees = new ObservableCollection<Employee>();
 
             for(int i = 1; i <= count; i++)
             {
-                Employee emp = new Employee(GenerateName(rnd.Next(10, 20)),
+                Employees.Add(new Employee(GenerateName(rnd.Next(10, 20)),
                                             GenerateName(rnd.Next(10, 20)),
-                                            GenerateAge(), GenerateActiveStatus(), 
-                                            GenerateStageYears(), 
-                                            departmentsList[rnd.Next(0, departmentsList.Count - 1)]);
-
-                Employees.Add(emp);
+                                            GenerateAge(), GenerateActiveStatus(),
+                                            GenerateStageYears(),
+                                            departmentsList[rnd.Next(0, departmentsList.Count - 1)]));
             }
         }
 
