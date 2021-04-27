@@ -34,7 +34,7 @@ namespace Pract5
         public MainWindow()
         {
             InitializeComponent();
-            this.Title = "База сотрудников и департаметов";
+            this.Title = "База сотрудников и департаментов";
             this.DataContext = this;
 
             departmentBase = new DepartmentBase();
@@ -47,17 +47,8 @@ namespace Pract5
 
         public void AddEmployeeToBase(Employee emp)
         {
-            //employeeBase.Employees.Add(emp);
             EmployeesList.Add(emp);
-            //UpdateBindings();
         }
-
-        //private void UpdateBindings()
-        //{
-        //    employeeListView.ItemsSource = null;
-        //    employeeListView.ItemsSource = employeeBase.Employees;
-        //}
-
         private void SetEmployeeControlStatus(bool is_enabled)
         {
             //addButton.IsEnabled = is_enabled;
@@ -85,12 +76,9 @@ namespace Pract5
             if (e.AddedItems.Count == 1)
             {
                 SelectedEmployee = (Employee)employeeListView.SelectedItem;
-                //employeeUserControl.Emp = SelectedEmployee;
                 employeeUserControl.Emp = (Employee)SelectedEmployee.Clone();
-
                 selectedIndex = employeeListView.SelectedIndex;
                 SetEmployeeControlStatus(true);
-                //employeeUserControl.ShowEmployeeInfo((Employee)e.AddedItems[0]);
             }
         }
 
@@ -98,8 +86,6 @@ namespace Pract5
         {
             if (employeeListView.SelectedItems.Count == 1)
             {
-                //employeeUserControl.UpdateEmployeeInfo();
-                //UpdateBindings();
                 EmployeesList[selectedIndex] = employeeUserControl.Emp;
                 MessageBox.Show("Запись обновлена!", "Изменение записи о сотруднике", MessageBoxButton.OK, MessageBoxImage.Information);
                 employeeListView.SelectedIndex = selectedIndex;
@@ -111,10 +97,7 @@ namespace Pract5
             if (employeeListView.SelectedItems.Count == 1 && 
                 MessageBox.Show("Уверены что хотите удалит запись о сотркднике?", "Удаление записи сотрудника", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                //employeeUserControl.UpdateEmployeeInfo();
-                //employeeBase.Employees.RemoveAt(employeeListView.SelectedIndex);
                 EmployeesList.RemoveAt(selectedIndex);
-                //UpdateBindings();
                 SetEmployeeControlStatus(false);
                 MessageBox.Show("Запись удалена!", "Изменение записи о сотруднике", MessageBoxButton.OK, MessageBoxImage.Information);
             }
