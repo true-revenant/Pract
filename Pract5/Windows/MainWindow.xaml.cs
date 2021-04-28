@@ -47,7 +47,8 @@ namespace Pract5
 
         public void AddEmployeeToBase(Employee emp)
         {
-            EmployeesList.Add(emp);
+            //EmployeesList.Add(emp);
+            employeeBase.Add(emp);
         }
         private void SetEmployeeControlStatus(bool is_enabled)
         {
@@ -86,7 +87,7 @@ namespace Pract5
         {
             if (employeeListView.SelectedItems.Count == 1)
             {
-                EmployeesList[selectedIndex] = employeeUserControl.Emp;
+                employeeBase.Update(employeeUserControl.Emp, selectedIndex);
                 MessageBox.Show("Запись обновлена!", "Изменение записи о сотруднике", MessageBoxButton.OK, MessageBoxImage.Information);
                 employeeListView.SelectedIndex = selectedIndex;
             }
@@ -97,7 +98,7 @@ namespace Pract5
             if (employeeListView.SelectedItems.Count == 1 && 
                 MessageBox.Show("Уверены что хотите удалит запись о сотркднике?", "Удаление записи сотрудника", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                EmployeesList.RemoveAt(selectedIndex);
+                employeeBase.Delete(SelectedEmployee);
                 SetEmployeeControlStatus(false);
                 MessageBox.Show("Запись удалена!", "Изменение записи о сотруднике", MessageBoxButton.OK, MessageBoxImage.Information);
             }
