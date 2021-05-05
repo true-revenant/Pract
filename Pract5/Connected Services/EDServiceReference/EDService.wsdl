@@ -19,6 +19,36 @@
   <wsdl:message name="IServiceED_GetDataUsingDataContract_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetDataUsingDataContractResponse" />
   </wsdl:message>
+  <wsdl:message name="IServiceED_LoadEmployees_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoadEmployees" />
+  </wsdl:message>
+  <wsdl:message name="IServiceED_LoadEmployees_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoadEmployeesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServiceED_AddEmployee_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddEmployee" />
+  </wsdl:message>
+  <wsdl:message name="IServiceED_AddEmployee_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddEmployeeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServiceED_RemoveEmployee_InputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveEmployee" />
+  </wsdl:message>
+  <wsdl:message name="IServiceED_RemoveEmployee_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveEmployeeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServiceED_UpdateEmployee_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateEmployee" />
+  </wsdl:message>
+  <wsdl:message name="IServiceED_UpdateEmployee_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateEmployeeResponse" />
+  </wsdl:message>
+  <wsdl:message name="IServiceED_LoadDepartments_InputMessage">
+    <wsdl:part name="parameters" element="tns:LoadDepartments" />
+  </wsdl:message>
+  <wsdl:message name="IServiceED_LoadDepartments_OutputMessage">
+    <wsdl:part name="parameters" element="tns:LoadDepartmentsResponse" />
+  </wsdl:message>
   <wsdl:portType name="IServiceED">
     <wsdl:operation name="GetData">
       <wsdl:input wsaw:Action="http://tempuri.org/IServiceED/GetData" message="tns:IServiceED_GetData_InputMessage" />
@@ -27,6 +57,26 @@
     <wsdl:operation name="GetDataUsingDataContract">
       <wsdl:input wsaw:Action="http://tempuri.org/IServiceED/GetDataUsingDataContract" message="tns:IServiceED_GetDataUsingDataContract_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IServiceED/GetDataUsingDataContractResponse" message="tns:IServiceED_GetDataUsingDataContract_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LoadEmployees">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceED/LoadEmployees" message="tns:IServiceED_LoadEmployees_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceED/LoadEmployeesResponse" message="tns:IServiceED_LoadEmployees_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddEmployee">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceED/AddEmployee" message="tns:IServiceED_AddEmployee_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceED/AddEmployeeResponse" message="tns:IServiceED_AddEmployee_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveEmployee">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceED/RemoveEmployee" message="tns:IServiceED_RemoveEmployee_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceED/RemoveEmployeeResponse" message="tns:IServiceED_RemoveEmployee_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateEmployee">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceED/UpdateEmployee" message="tns:IServiceED_UpdateEmployee_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceED/UpdateEmployeeResponse" message="tns:IServiceED_UpdateEmployee_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="LoadDepartments">
+      <wsdl:input wsaw:Action="http://tempuri.org/IServiceED/LoadDepartments" message="tns:IServiceED_LoadDepartments_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IServiceED/LoadDepartmentsResponse" message="tns:IServiceED_LoadDepartments_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IServiceED" type="tns:IServiceED">
@@ -42,6 +92,51 @@
     </wsdl:operation>
     <wsdl:operation name="GetDataUsingDataContract">
       <soap:operation soapAction="http://tempuri.org/IServiceED/GetDataUsingDataContract" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadEmployees">
+      <soap:operation soapAction="http://tempuri.org/IServiceED/LoadEmployees" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddEmployee">
+      <soap:operation soapAction="http://tempuri.org/IServiceED/AddEmployee" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveEmployee">
+      <soap:operation soapAction="http://tempuri.org/IServiceED/RemoveEmployee" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateEmployee">
+      <soap:operation soapAction="http://tempuri.org/IServiceED/UpdateEmployee" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="LoadDepartments">
+      <soap:operation soapAction="http://tempuri.org/IServiceED/LoadDepartments" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

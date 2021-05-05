@@ -76,10 +76,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Classes\Department.cs" />
-    <Compile Include="Classes\DepartmentBase.cs" />
-    <Compile Include="Classes\Employee.cs" />
-    <Compile Include="Classes\EmployeeBase.cs" />
     <Compile Include="Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -121,9 +117,9 @@
     <None Include="Connected Services\EDServiceReference\EDService2.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\EDServiceReference\Pract5.EDServiceReference.CompositeType.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
+    <None Include="Properties\DataSources\ED_WcfService.CompositeType.datasource" />
+    <None Include="Properties\DataSources\ED_WcfService.Department.datasource" />
+    <None Include="Properties\DataSources\ED_WcfService.Employee.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -152,6 +148,12 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ED_WcfService\ED_WcfService.csproj">
+      <Project>{37102A59-0CC2-47C2-8A9B-F7BC5FA7128C}</Project>
+      <Name>ED_WcfService</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

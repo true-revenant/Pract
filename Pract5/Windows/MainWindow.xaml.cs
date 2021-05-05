@@ -1,5 +1,5 @@
-﻿using Pract5.Classes;
-using Pract5.Windows;
+﻿using ED_DesktopClient.Windows;
+using ED_WcfService;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -16,39 +16,48 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Pract5
+namespace ED_DesktopClient
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
-        EmployeeBase employeeBase;
-        DepartmentBase departmentBase;
-        int selectedIndex;
+        //EmployeeBase employeeBase;
+        //DepartmentBase departmentBase;
+        private int selectedIndex;
+        private List<Department> departmentList;
         
         public Employee SelectedEmployee { get; set; }
 
         public ObservableCollection<Employee> EmployeesList { get; set; }
+
+        public EDService service = new EDService();
 
         public MainWindow()
         {
             InitializeComponent();
             this.Title = "База сотрудников и департаментов";
             this.DataContext = this;
+            
+            departmentList = service.LoadDepartments();
+            EmployeesList = service.LoadEmployees(departmentList);
 
-            departmentBase = new DepartmentBase();
-            employeeBase = new EmployeeBase(departmentBase.Departments);
-            EmployeesList = employeeBase.Employees;
+            //departmentBase = new DepartmentBase();
+            //employeeBase = new EmployeeBase(departmentBase.Departments);
+            //EmployeesList = employeeBase.Employees;
 
-            employeeUserControl.initDepartmentBase(departmentBase);
+
+            employeeUserControl.initDepartmentBase(departmentList);
             SetEmployeeControlStatus(false);
         }
 
-        public void AddEmployeeToBase(Employee emp)
+        public int AddEmployeeToBase(Employee emp)
         {
+            return service.AddEmployee(emp);
             //EmployeesList.Add(emp);
-            employeeBase.Add(emp);
+            //employeeBase.Add(emp);
+            //if (service.AddEmployee(emp) > 0) EmployeesList.Add(emp);
         }
         private void SetEmployeeControlStatus(bool is_enabled)
         {
@@ -87,7 +96,9 @@ namespace Pract5
         {
             if (employeeListView.SelectedItems.Count == 1)
             {
-                employeeBase.Update(employeeUserControl.Emp, selectedIndex);
+                //employeeBase.Update(employeeUserControl.Emp, selectedIndex);
+                service.UpdateEmployee(employeeUserControl.Emp);
+                EmployeesList[selectedIndex] = employeeUserControl.Emp;
                 MessageBox.Show("Запись обновлена!", "Изменение записи о сотруднике", MessageBoxButton.OK, MessageBoxImage.Information);
                 employeeListView.SelectedIndex = selectedIndex;
             }
@@ -95,18 +106,22 @@ namespace Pract5
 
         private void deleteButton_Click(object sender, RoutedEventArgs e)
         {
-            if (employeeListView.SelectedItems.Count == 1 && 
+            if (employeeListView.SelectedItems.Count == 1 &&
                 MessageBox.Show("Уверены что хотите удалит запись о сотркднике?", "Удаление записи сотрудника", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                employeeBase.Delete(SelectedEmployee);
-                SetEmployeeControlStatus(false);
-                MessageBox.Show("Запись удалена!", "Изменение записи о сотруднике", MessageBoxButton.OK, MessageBoxImage.Information);
+                //employeeBase.Delete(SelectedEmployee);
+                if (service.RemoveEmployee(SelectedEmployee) > 0)
+                {
+                    EmployeesList.Remove(SelectedEmployee);
+                    SetEmployeeControlStatus(false);
+                    MessageBox.Show("Запись удалена!", "Изменение записи о сотруднике", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
             }
         }
 
         private void addButton_Click(object sender, RoutedEventArgs e)
         {
-            AddWindow addWindow = new AddWindow(departmentBase);
+            AddWindow addWindow = new AddWindow(departmentList);
             addWindow.Owner = this;
             addWindow.ShowDialog();
         }

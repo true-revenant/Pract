@@ -12,13 +12,13 @@ namespace Pract5.Classes
     {
         #region PUBLIC FIELDS
 
-        public const string connectionString = "Data Source=localhost;Initial Catalog=Corporation;User ID=corp_user;Password=123456";
+        //public const string connectionString = "Data Source=localhost;Initial Catalog=Corporation;User ID=corp_user;Password=123456";
         public ObservableCollection<Employee> Employees { get; set; }
 
         #endregion
 
         #region PRIVATE FIELDS
-
+        private string connectionString;
         private readonly int CHAR_MIN = 65;
         private readonly int CHAR_MAX = 90;
         private readonly Random rnd = new Random();

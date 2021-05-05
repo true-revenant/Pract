@@ -1,4 +1,4 @@
-﻿using Pract5.Classes;
+﻿using ED_WcfService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace Pract5.Windows
+namespace ED_DesktopClient.Windows
 {
     /// <summary>
     /// Interaction logic for Window1.xaml
@@ -27,11 +27,11 @@ namespace Pract5.Windows
             InitializeComponent();
         }
 
-        public AddWindow(DepartmentBase dBase)
+        public AddWindow(List<Department> depList)
         {
             InitializeComponent();
             this.Title = "Новый сотрудник";
-            newEmployUserControl.initDepartmentBase(dBase);
+            newEmployUserControl.initDepartmentBase(depList);
             newEmployUserControl.depsComboBox.SelectedIndex = 0;
         }
 
@@ -44,14 +44,18 @@ namespace Pract5.Windows
         {
             MainWindow main = (MainWindow)Owner;
 
-            main.AddEmployeeToBase(new Employee(newEmployUserControl.nameTextBox.Text,
+            var newEmp = new Employee(newEmployUserControl.nameTextBox.Text,
                                       newEmployUserControl.lastnameTextBox.Text, 30,
-                                      (bool)newEmployUserControl.activeCheckBox.IsChecked, 
+                                      (bool)newEmployUserControl.activeCheckBox.IsChecked,
                                       Int32.Parse(newEmployUserControl.stageTextBox.Text),
-                                      (Department)newEmployUserControl.depsComboBox.SelectedItem));
+                                      (Department)newEmployUserControl.depsComboBox.SelectedItem);
 
-            MessageBox.Show("Запись добавлена!", "Добавление записи о сотруднике", MessageBoxButton.OK, MessageBoxImage.Information);
-            Close();
+            if (main.AddEmployeeToBase(newEmp) > 0)
+            {
+                main.EmployeesList.Add(newEmp);
+                MessageBox.Show("Запись добавлена!", "Добавление записи о сотруднике", MessageBoxButton.OK, MessageBoxImage.Information);
+                Close();
+            }
         }
     }
 }

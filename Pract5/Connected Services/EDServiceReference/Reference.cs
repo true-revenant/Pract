@@ -9,70 +9,7 @@
 //------------------------------------------------------------------------------
 
 namespace Pract5.EDServiceReference {
-    using System.Runtime.Serialization;
-    using System;
     
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="CompositeType", Namespace="http://schemas.datacontract.org/2004/07/ED_WcfService")]
-    [System.SerializableAttribute()]
-    public partial class CompositeType : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool BoolValueField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string StringValueField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool BoolValue {
-            get {
-                return this.BoolValueField;
-            }
-            set {
-                if ((this.BoolValueField.Equals(value) != true)) {
-                    this.BoolValueField = value;
-                    this.RaisePropertyChanged("BoolValue");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string StringValue {
-            get {
-                return this.StringValueField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.StringValueField, value) != true)) {
-                    this.StringValueField = value;
-                    this.RaisePropertyChanged("StringValue");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="EDServiceReference.IServiceED")]
@@ -85,10 +22,40 @@ namespace Pract5.EDServiceReference {
         System.Threading.Tasks.Task<string> GetDataAsync(int value);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceED/GetDataUsingDataContract", ReplyAction="http://tempuri.org/IServiceED/GetDataUsingDataContractResponse")]
-        Pract5.EDServiceReference.CompositeType GetDataUsingDataContract(Pract5.EDServiceReference.CompositeType composite);
+        ED_WcfService.CompositeType GetDataUsingDataContract(ED_WcfService.CompositeType composite);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceED/GetDataUsingDataContract", ReplyAction="http://tempuri.org/IServiceED/GetDataUsingDataContractResponse")]
-        System.Threading.Tasks.Task<Pract5.EDServiceReference.CompositeType> GetDataUsingDataContractAsync(Pract5.EDServiceReference.CompositeType composite);
+        System.Threading.Tasks.Task<ED_WcfService.CompositeType> GetDataUsingDataContractAsync(ED_WcfService.CompositeType composite);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceED/LoadEmployees", ReplyAction="http://tempuri.org/IServiceED/LoadEmployeesResponse")]
+        ED_WcfService.Employee[] LoadEmployees(ED_WcfService.Department[] departmentsList);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceED/LoadEmployees", ReplyAction="http://tempuri.org/IServiceED/LoadEmployeesResponse")]
+        System.Threading.Tasks.Task<ED_WcfService.Employee[]> LoadEmployeesAsync(ED_WcfService.Department[] departmentsList);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceED/AddEmployee", ReplyAction="http://tempuri.org/IServiceED/AddEmployeeResponse")]
+        int AddEmployee(ED_WcfService.Employee empl);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceED/AddEmployee", ReplyAction="http://tempuri.org/IServiceED/AddEmployeeResponse")]
+        System.Threading.Tasks.Task<int> AddEmployeeAsync(ED_WcfService.Employee empl);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceED/RemoveEmployee", ReplyAction="http://tempuri.org/IServiceED/RemoveEmployeeResponse")]
+        int RemoveEmployee(ED_WcfService.Employee empl);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceED/RemoveEmployee", ReplyAction="http://tempuri.org/IServiceED/RemoveEmployeeResponse")]
+        System.Threading.Tasks.Task<int> RemoveEmployeeAsync(ED_WcfService.Employee empl);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceED/UpdateEmployee", ReplyAction="http://tempuri.org/IServiceED/UpdateEmployeeResponse")]
+        ED_WcfService.Employee UpdateEmployee(ED_WcfService.Employee empl);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceED/UpdateEmployee", ReplyAction="http://tempuri.org/IServiceED/UpdateEmployeeResponse")]
+        System.Threading.Tasks.Task<ED_WcfService.Employee> UpdateEmployeeAsync(ED_WcfService.Employee empl);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceED/LoadDepartments", ReplyAction="http://tempuri.org/IServiceED/LoadDepartmentsResponse")]
+        ED_WcfService.Department[] LoadDepartments();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceED/LoadDepartments", ReplyAction="http://tempuri.org/IServiceED/LoadDepartmentsResponse")]
+        System.Threading.Tasks.Task<ED_WcfService.Department[]> LoadDepartmentsAsync();
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -126,12 +93,52 @@ namespace Pract5.EDServiceReference {
             return base.Channel.GetDataAsync(value);
         }
         
-        public Pract5.EDServiceReference.CompositeType GetDataUsingDataContract(Pract5.EDServiceReference.CompositeType composite) {
+        public ED_WcfService.CompositeType GetDataUsingDataContract(ED_WcfService.CompositeType composite) {
             return base.Channel.GetDataUsingDataContract(composite);
         }
         
-        public System.Threading.Tasks.Task<Pract5.EDServiceReference.CompositeType> GetDataUsingDataContractAsync(Pract5.EDServiceReference.CompositeType composite) {
+        public System.Threading.Tasks.Task<ED_WcfService.CompositeType> GetDataUsingDataContractAsync(ED_WcfService.CompositeType composite) {
             return base.Channel.GetDataUsingDataContractAsync(composite);
+        }
+        
+        public ED_WcfService.Employee[] LoadEmployees(ED_WcfService.Department[] departmentsList) {
+            return base.Channel.LoadEmployees(departmentsList);
+        }
+        
+        public System.Threading.Tasks.Task<ED_WcfService.Employee[]> LoadEmployeesAsync(ED_WcfService.Department[] departmentsList) {
+            return base.Channel.LoadEmployeesAsync(departmentsList);
+        }
+        
+        public int AddEmployee(ED_WcfService.Employee empl) {
+            return base.Channel.AddEmployee(empl);
+        }
+        
+        public System.Threading.Tasks.Task<int> AddEmployeeAsync(ED_WcfService.Employee empl) {
+            return base.Channel.AddEmployeeAsync(empl);
+        }
+        
+        public int RemoveEmployee(ED_WcfService.Employee empl) {
+            return base.Channel.RemoveEmployee(empl);
+        }
+        
+        public System.Threading.Tasks.Task<int> RemoveEmployeeAsync(ED_WcfService.Employee empl) {
+            return base.Channel.RemoveEmployeeAsync(empl);
+        }
+        
+        public ED_WcfService.Employee UpdateEmployee(ED_WcfService.Employee empl) {
+            return base.Channel.UpdateEmployee(empl);
+        }
+        
+        public System.Threading.Tasks.Task<ED_WcfService.Employee> UpdateEmployeeAsync(ED_WcfService.Employee empl) {
+            return base.Channel.UpdateEmployeeAsync(empl);
+        }
+        
+        public ED_WcfService.Department[] LoadDepartments() {
+            return base.Channel.LoadDepartments();
+        }
+        
+        public System.Threading.Tasks.Task<ED_WcfService.Department[]> LoadDepartmentsAsync() {
+            return base.Channel.LoadDepartmentsAsync();
         }
     }
 }

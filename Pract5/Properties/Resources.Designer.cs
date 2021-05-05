@@ -9,7 +9,7 @@
 //------------------------------------------------------------------------------
 
 
-namespace Pract5.Properties
+namespace ED_DesktopClient.Properties
 {
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.

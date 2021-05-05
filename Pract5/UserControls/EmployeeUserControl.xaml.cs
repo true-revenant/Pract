@@ -1,4 +1,4 @@
-﻿using Pract5.Classes;
+﻿using ED_WcfService;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,7 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Pract5.UserControls
+namespace ED_DesktopClient.UserControls
 {
     /// <summary>
     /// Interaction logic for EmployeeUserControl.xaml
@@ -45,9 +45,10 @@ namespace Pract5.UserControls
             this.DataContext = this;
         }
 
-        public void initDepartmentBase(DepartmentBase dBase)
+        public void initDepartmentBase(List<Department> depList)
         {
-            Deps = dBase.Departments;
+            //Deps = dBase.Departments;
+            Deps = depList;
         }
 
         public void HandleNotifyPropertyChanged([CallerMemberName] string propName = "")

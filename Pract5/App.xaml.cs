@@ -1,5 +1,4 @@
-﻿using Pract5.Classes;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -7,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Pract5
+namespace ED_DesktopClient
 {
     /// <summary>
     /// Interaction logic for App.xaml

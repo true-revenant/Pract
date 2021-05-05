@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -20,7 +21,21 @@ namespace ED_WcfService
 
         [OperationContract]
         CompositeType GetDataUsingDataContract(CompositeType composite);
+        
+        [OperationContract]
+        ObservableCollection<Employee> LoadEmployees(List<Department> departmentsList);
 
+        [OperationContract]
+        int AddEmployee(Employee empl);
+
+        [OperationContract]
+        int RemoveEmployee(Employee empl);
+
+        [OperationContract]
+        Employee UpdateEmployee(Employee empl);
+
+        [OperationContract]
+        List<Department> LoadDepartments();
     }
 
 
