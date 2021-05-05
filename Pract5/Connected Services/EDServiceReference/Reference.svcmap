@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="e4bbea3e-5402-4dd3-a70e-285779785d49" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:64628/EDService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="EDService.xsd" MetadataType="Schema" ID="46826b87-f1df-4bd9-a0ae-8c8b80575b2b" SourceId="1" SourceUrl="http://localhost:64628/EDService.svc?xsd=xsd2" />
+    <MetadataFile FileName="EDService1.xsd" MetadataType="Schema" ID="a53b5171-9084-4c2a-b84f-7cade322919e" SourceId="1" SourceUrl="http://localhost:64628/EDService.svc?xsd=xsd1" />
+    <MetadataFile FileName="EDService2.xsd" MetadataType="Schema" ID="e9e420ab-5aa5-42df-9c3f-1191ed92476d" SourceId="1" SourceUrl="http://localhost:64628/EDService.svc?xsd=xsd0" />
+    <MetadataFile FileName="EDService.disco" MetadataType="Disco" ID="7283e8a3-d22f-4b71-9980-44fd259d67e7" SourceId="1" SourceUrl="http://localhost:64628/EDService.svc?disco" />
+    <MetadataFile FileName="EDService.wsdl" MetadataType="Wsdl" ID="61d4a19c-6ab5-4a6b-8fc0-6e089df47f13" SourceId="1" SourceUrl="http://localhost:64628/EDService.svc?wsdl" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

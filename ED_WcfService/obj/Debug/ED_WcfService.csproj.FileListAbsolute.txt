@@ -1,0 +1,7 @@
+F:\VS_projects\Geek Brains\2_Basics\Pract\ED_WcfService\bin\ED_WcfService.dll.config
+F:\VS_projects\Geek Brains\2_Basics\Pract\ED_WcfService\bin\ED_WcfService.dll
+F:\VS_projects\Geek Brains\2_Basics\Pract\ED_WcfService\bin\ED_WcfService.pdb
+F:\VS_projects\Geek Brains\2_Basics\Pract\ED_WcfService\obj\Debug\ED_WcfService.csprojAssemblyReference.cache
+F:\VS_projects\Geek Brains\2_Basics\Pract\ED_WcfService\obj\Debug\ED_WcfService.csproj.CoreCompileInputs.cache
+F:\VS_projects\Geek Brains\2_Basics\Pract\ED_WcfService\obj\Debug\ED_WcfService.dll
+F:\VS_projects\Geek Brains\2_Basics\Pract\ED_WcfService\obj\Debug\ED_WcfService.pdb

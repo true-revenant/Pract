@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Pract5.EDServiceReference;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
