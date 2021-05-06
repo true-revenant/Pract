@@ -43,11 +43,6 @@ namespace ED_DesktopClient
             departmentList = service.LoadDepartments();
             EmployeesList = service.LoadEmployees(departmentList);
 
-            //departmentBase = new DepartmentBase();
-            //employeeBase = new EmployeeBase(departmentBase.Departments);
-            //EmployeesList = employeeBase.Employees;
-
-
             employeeUserControl.initDepartmentBase(departmentList);
             SetEmployeeControlStatus(false);
         }
@@ -55,9 +50,6 @@ namespace ED_DesktopClient
         public int AddEmployeeToBase(Employee emp)
         {
             return service.AddEmployee(emp);
-            //EmployeesList.Add(emp);
-            //employeeBase.Add(emp);
-            //if (service.AddEmployee(emp) > 0) EmployeesList.Add(emp);
         }
         private void SetEmployeeControlStatus(bool is_enabled)
         {
@@ -96,7 +88,6 @@ namespace ED_DesktopClient
         {
             if (employeeListView.SelectedItems.Count == 1)
             {
-                //employeeBase.Update(employeeUserControl.Emp, selectedIndex);
                 service.UpdateEmployee(employeeUserControl.Emp);
                 EmployeesList[selectedIndex] = employeeUserControl.Emp;
                 MessageBox.Show("Запись обновлена!", "Изменение записи о сотруднике", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -109,7 +100,6 @@ namespace ED_DesktopClient
             if (employeeListView.SelectedItems.Count == 1 &&
                 MessageBox.Show("Уверены что хотите удалит запись о сотркднике?", "Удаление записи сотрудника", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                //employeeBase.Delete(SelectedEmployee);
                 if (service.RemoveEmployee(SelectedEmployee) > 0)
                 {
                     EmployeesList.Remove(SelectedEmployee);

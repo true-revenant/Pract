@@ -92,7 +92,7 @@ namespace ED_DesktopClient.UserControls {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/Pract5;component/usercontrols/employeeusercontrol.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/ED_DesktopClient;component/usercontrols/employeeusercontrol.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\UserControls\EmployeeUserControl.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

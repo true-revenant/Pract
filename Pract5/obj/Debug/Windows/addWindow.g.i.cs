@@ -77,7 +77,7 @@ namespace ED_DesktopClient.Windows {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/Pract5;component/windows/addwindow.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/ED_DesktopClient;component/windows/addwindow.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\Windows\AddWindow.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

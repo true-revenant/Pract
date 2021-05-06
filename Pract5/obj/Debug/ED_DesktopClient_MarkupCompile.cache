@@ -1,20 +1,20 @@
-﻿Pract5
+﻿ED_DesktopClient
 
 
 winexe
 C#
 .cs
 F:\VS_projects\Geek Brains\2_Basics\Pract\Pract5\obj\Debug\
-Pract5
+ED_DesktopClient
 none
 false
 DEBUG;TRACE
 F:\VS_projects\Geek Brains\2_Basics\Pract\Pract5\App.xaml
-3-1319986401
+4553731532
 
-8-897854034
+9876907233
 161282804781
-Windows\MainWindow.xaml;UserControls\EmployeeUserControl.xaml;Windows\AddWindow.xaml;
+Windows\LoginWindow.xaml;Windows\MainWindow.xaml;UserControls\EmployeeUserControl.xaml;Windows\AddWindow.xaml;
 
 False
 

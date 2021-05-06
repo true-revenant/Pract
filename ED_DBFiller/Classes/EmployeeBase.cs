@@ -11,13 +11,6 @@ namespace ED_DBFiller
 {
     public static class EmployeeBase
     {
-        #region PUBLIC FIELDS
-
-        
-        //public ObservableCollection<Employee> Employees { get; set; }
-
-        #endregion
-
         #region PRIVATE FIELDS
         
         private static readonly int CHAR_MIN = 65;
@@ -53,7 +46,6 @@ namespace ED_DBFiller
         #endregion
 
         #region PRIVATE METHODS
-
         private static bool IsEmpty()
         {
             using (var conn = new SqlConnection(connectionString))

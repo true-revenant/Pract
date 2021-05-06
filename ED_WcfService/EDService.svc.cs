@@ -16,8 +16,9 @@ namespace ED_WcfService
     // NOTE: In order to launch WCF Test Client for testing this service, please select Service1.svc or Service1.svc.cs at the Solution Explorer and start debugging.
     public class EDService : IServiceED
     {
-        private string connectionString = WebConfigurationManager.ConnectionStrings["cStr"].ConnectionString;
-        //private string connectionString = "Data Source=localhost;Initial Catalog=Corporation;User ID=corp_user;Password=123456";
+        //private string connectionString = ConfigurationManager.ConnectionStrings["cStr"].ConnectionString;
+        private string connectionString;
+        private SqlConnectionStringBuilder connectionStringBuilder;
 
         public int AddEmployee(Employee empl)
         {
@@ -31,8 +32,6 @@ namespace ED_WcfService
 
                 SqlCommand command = new SqlCommand(sqlQuery, conn);
                 return command.ExecuteNonQuery();
-                //if (command.ExecuteNonQuery() > 0)
-                //    Employees.Add(newEmp);
             }
         }
 
@@ -56,9 +55,6 @@ namespace ED_WcfService
                                 IsActive = (bool)reader["IsActive"],
                                 ID = (int)reader["ID"]
                             };
-
-                            //var depart = new Department(reader["Title"].ToString(), (bool)reader["IsActive"]);
-                            //depart.SetDepartmentID((int)reader["ID"]);
                             res.Add(depart);
                         }
                     }
@@ -108,8 +104,6 @@ namespace ED_WcfService
 
                 SqlCommand command = new SqlCommand(sqlQuery, conn);
                 return command.ExecuteNonQuery();
-                //if (command.ExecuteNonQuery() > 0)
-                //    Employees.Remove(delEmp);
             }
         }
 
@@ -132,27 +126,26 @@ namespace ED_WcfService
             }
         }
 
-        public string GetData(int value)
+        public bool PostAndCheckCredentials(string login, string password)
         {
-            return string.Format("You entered: {0}", value);
-        }
+            bool res = false;
+            connectionStringBuilder = new SqlConnectionStringBuilder();
+            connectionStringBuilder.DataSource = "localhost";
+            connectionStringBuilder.InitialCatalog = "Corporation";
+            connectionStringBuilder.UserID = login;
+            connectionStringBuilder.Password = password;
 
-        public CompositeType GetDataUsingDataContract(CompositeType composite)
-        {
-            if (composite == null)
+            connectionString = connectionStringBuilder.ConnectionString;
+
+            using (var conn = new SqlConnection(connectionString))
             {
-                throw new ArgumentNullException("composite");
+                conn.Open();
+                res = true;
+                return res;
             }
-            if (composite.BoolValue)
-            {
-                composite.StringValue += "Suffix";
-            }
-            return composite;
         }
 
         #region NON IMPLEMENTED LOCAL
-
-
 
         #endregion
     }

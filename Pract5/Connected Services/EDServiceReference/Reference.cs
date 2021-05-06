@@ -8,24 +8,12 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Pract5.EDServiceReference {
+namespace ED_DesktopClient.EDServiceReference {
     
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="EDServiceReference.IServiceED")]
     public interface IServiceED {
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceED/GetData", ReplyAction="http://tempuri.org/IServiceED/GetDataResponse")]
-        string GetData(int value);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceED/GetData", ReplyAction="http://tempuri.org/IServiceED/GetDataResponse")]
-        System.Threading.Tasks.Task<string> GetDataAsync(int value);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceED/GetDataUsingDataContract", ReplyAction="http://tempuri.org/IServiceED/GetDataUsingDataContractResponse")]
-        ED_WcfService.CompositeType GetDataUsingDataContract(ED_WcfService.CompositeType composite);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceED/GetDataUsingDataContract", ReplyAction="http://tempuri.org/IServiceED/GetDataUsingDataContractResponse")]
-        System.Threading.Tasks.Task<ED_WcfService.CompositeType> GetDataUsingDataContractAsync(ED_WcfService.CompositeType composite);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IServiceED/LoadEmployees", ReplyAction="http://tempuri.org/IServiceED/LoadEmployeesResponse")]
         ED_WcfService.Employee[] LoadEmployees(ED_WcfService.Department[] departmentsList);
@@ -59,12 +47,12 @@ namespace Pract5.EDServiceReference {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IServiceEDChannel : Pract5.EDServiceReference.IServiceED, System.ServiceModel.IClientChannel {
+    public interface IServiceEDChannel : ED_DesktopClient.EDServiceReference.IServiceED, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class ServiceEDClient : System.ServiceModel.ClientBase<Pract5.EDServiceReference.IServiceED>, Pract5.EDServiceReference.IServiceED {
+    public partial class ServiceEDClient : System.ServiceModel.ClientBase<ED_DesktopClient.EDServiceReference.IServiceED>, ED_DesktopClient.EDServiceReference.IServiceED {
         
         public ServiceEDClient() {
         }
@@ -83,22 +71,6 @@ namespace Pract5.EDServiceReference {
         
         public ServiceEDClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
-        }
-        
-        public string GetData(int value) {
-            return base.Channel.GetData(value);
-        }
-        
-        public System.Threading.Tasks.Task<string> GetDataAsync(int value) {
-            return base.Channel.GetDataAsync(value);
-        }
-        
-        public ED_WcfService.CompositeType GetDataUsingDataContract(ED_WcfService.CompositeType composite) {
-            return base.Channel.GetDataUsingDataContract(composite);
-        }
-        
-        public System.Threading.Tasks.Task<ED_WcfService.CompositeType> GetDataUsingDataContractAsync(ED_WcfService.CompositeType composite) {
-            return base.Channel.GetDataUsingDataContractAsync(composite);
         }
         
         public ED_WcfService.Employee[] LoadEmployees(ED_WcfService.Department[] departmentsList) {
