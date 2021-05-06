@@ -12,7 +12,9 @@
             <ColumnDefinition Width="198*"/>
             <ColumnDefinition Width="185*"/>
         </Grid.ColumnDefinitions>
-        <ListView x:Name="employeeListView" Margin="10,10,2,10" Background="#FFEAEAEA" SelectionMode="Single" SelectionChanged="employeeListView_SelectionChanged">
+        <ListView x:Name="employeeListView" Margin="10,10,2,10" Background="#FFEAEAEA" 
+                  SelectionMode="Single" SelectionChanged="employeeListView_SelectionChanged" 
+                  ItemsSource="{Binding EmployeesList}" SelectedItem="{Binding SelectedEmployee}" >
             <ListView.View>
                 <GridView>
                     <GridViewColumn Width="auto" Header="Полное Имя" DisplayMemberBinding="{Binding FullName}"/>
