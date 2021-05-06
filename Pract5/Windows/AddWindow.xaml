@@ -1,0 +1,21 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Pract5.Windows"
+        xmlns:UserControls="clr-namespace:Pract5.UserControls" x:Class="Pract5.Windows.AddWindow"
+        mc:Ignorable="d"
+        Title="AddWindow" Height="279.024" Width="541.161" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+    <Grid Margin="0,0,2,-1">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="64*"/>
+            <ColumnDefinition Width="113*"/>
+        </Grid.ColumnDefinitions>
+
+        <UserControls:EmployeeUserControl x:Name="newEmployUserControl" HorizontalAlignment="Left" Height="184" VerticalAlignment="Top" Width="531" Grid.ColumnSpan="2"/>
+        <Button x:Name="closeButton" Content="Закрыть" Grid.Column="1" Margin="221,0,10,10" VerticalAlignment="Bottom" Height="42" Click="closeButton_Click"/>
+        <Button x:Name="addButton" Content="Добавить" Grid.Column="1" HorizontalAlignment="Left" Margin="108,0,0,10" VerticalAlignment="Bottom" Width="108" Height="42" Click="addButton_Click"/>
+
+    </Grid>
+</Window>

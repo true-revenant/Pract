@@ -1,0 +1,21 @@
+﻿<UserControl x:Class="Pract5.UserControls.EmployeeUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Pract5.UserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="249.341" d:DesignWidth="423.614">
+    <Grid>
+        <TextBlock HorizontalAlignment="Left" Margin="65,10,0,0" TextWrapping="Wrap" Text="ИМЯ" VerticalAlignment="Top" Height="22" TextAlignment="Center"/>
+        <TextBlock HorizontalAlignment="Left" Margin="31,42,0,0" TextWrapping="Wrap" Text="ФАМИЛИЯ" VerticalAlignment="Top" Height="22"/>
+        <TextBox x:Name="nameTextBox" Height="23" Margin="97,9,10,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <TextBox x:Name="lastnameTextBox" Height="22" Margin="97,42,10,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <ComboBox x:Name="depsComboBox" Margin="97,77,10,0" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="54,77,0,0" TextWrapping="Wrap" Text="ОТДЕЛ" VerticalAlignment="Top" RenderTransformOrigin="0.478,0.257" Height="22"/>
+        <TextBox x:Name="stageTextBox" Height="23" Margin="97,114,10,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <TextBlock HorizontalAlignment="Left" Margin="10,115,0,0" TextWrapping="Wrap" Text="СТАЖ (в годах)" VerticalAlignment="Top" Height="23"/>
+        <CheckBox x:Name="activeCheckBox" Content="АКТИВЕН" HorizontalAlignment="Left" Margin="97,153,0,0" VerticalAlignment="Top" Height="28"/>
+
+    </Grid>
+</UserControl>
