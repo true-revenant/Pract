@@ -8,8 +8,9 @@ namespace Pract5.Classes
 {
     public class Department
     {
-        public string Title { get; set; }
+        int _department_ID;
 
+        public string Title { get; set; }
         public bool IsActive { get; set; }
 
         public Department(string title, bool isActive)
@@ -18,6 +19,15 @@ namespace Pract5.Classes
             IsActive = isActive;
         }
 
+        public int GetDepartmentID()
+        {
+            return _department_ID;
+        }
+
+        public void SetDepartmentID(int id)
+        {
+            _department_ID = id;
+        }
         public override string ToString()
         {
             return Title;

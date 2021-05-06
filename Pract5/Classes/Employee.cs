@@ -16,7 +16,8 @@ namespace Pract5.Classes
         int _age;
         bool _isActive;
         int _stageYears;
-        
+        int _employee_ID;
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public Department Dep 
@@ -91,6 +92,16 @@ namespace Pract5.Classes
             StageYears = stageYears;
 
             Dep = dep;
+        }
+
+        public int getEmployeeID()
+        {
+            return _employee_ID;
+        }
+
+        public void SetEmployeeID(int id)
+        {
+            _employee_ID = id;
         }
 
         public void HandleNotifyPropertyChanged([CallerMemberName] string propName = "")
