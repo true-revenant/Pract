@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pract2", "HumanResources\Pr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pract4", "Pract4\Pract4.csproj", "{E651A36E-0A4C-458F-911C-1D35B53BCE83}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pract5", "Pract5\Pract5.csproj", "{7AEDA21A-495D-4B66-BA6A-4AFD22F8B1EE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmployeesDepartaments", "Pract5\EmployeesDepartaments.csproj", "{7AEDA21A-495D-4B66-BA6A-4AFD22F8B1EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

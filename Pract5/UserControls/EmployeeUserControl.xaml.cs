@@ -1,7 +1,9 @@
 ﻿using Pract5.Classes;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -19,40 +21,39 @@ namespace Pract5.UserControls
     /// <summary>
     /// Interaction logic for EmployeeUserControl.xaml
     /// </summary>
-    public partial class EmployeeUserControl : UserControl
+    public partial class EmployeeUserControl : UserControl, INotifyPropertyChanged
     {
-        Employee employee;
-        DepartmentBase departmentBase;
+        Employee _employee;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public Employee Emp
+        {
+            get { return _employee; }
+            set
+            {
+                _employee = value;
+                HandleNotifyPropertyChanged();
+            }
+        }
+
+        public List<Department> Deps { get; set; }
 
         public EmployeeUserControl()
         {
             InitializeComponent();
+            this.DataContext = this;
         }
 
         public void initDepartmentBase(DepartmentBase dBase)
         {
-            departmentBase = dBase;
-            depsComboBox.ItemsSource = departmentBase.Departments;
+            Deps = dBase.Departments;
         }
 
-        public void ShowEmployeeInfo(Employee emp)
+        public void HandleNotifyPropertyChanged([CallerMemberName] string propName = "")
         {
-            employee = emp;
-
-            nameTextBox.Text = emp.FirstName;
-            lastnameTextBox.Text = emp.LastName;
-            depsComboBox.SelectedItem = emp.getDep();
-            activeCheckBox.IsChecked = emp.IsActive;
-            stageTextBox.Text = emp.StageYears.ToString();
-        }
-
-        public void UpdateEmployeeInfo()
-        {
-            employee.FirstName = nameTextBox.Text;
-            employee.LastName = lastnameTextBox.Text;
-            employee.IsActive = (bool)activeCheckBox.IsChecked;
-            employee.StageYears = Int32.Parse(stageTextBox.Text);
-            employee.SetDep((Department)depsComboBox.SelectedItem);
+            if (PropertyChanged != null)
+                PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propName));
         }
     }
 }

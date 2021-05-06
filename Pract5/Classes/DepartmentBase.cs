@@ -46,6 +46,5 @@ namespace Pract5.Classes
             return rnd.Next(0, 1) == 0 ? false : true;
         }
 
-
     }
 }

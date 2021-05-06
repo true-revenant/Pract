@@ -2,6 +2,7 @@
 using Pract5.Windows;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,33 +26,29 @@ namespace Pract5
         EmployeeBase employeeBase;
         DepartmentBase departmentBase;
         int selectedIndex;
+        
+        public Employee SelectedEmployee { get; set; }
+
+        public ObservableCollection<Employee> EmployeesList { get; set; }
 
         public MainWindow()
         {
             InitializeComponent();
-            this.Title = "База сотрудников и департаметов";
+            this.Title = "База сотрудников и департаментов";
+            this.DataContext = this;
 
             departmentBase = new DepartmentBase();
             employeeBase = new EmployeeBase(departmentBase.Departments);
+            EmployeesList = employeeBase.Employees;
 
-            UpdateBindings();
             employeeUserControl.initDepartmentBase(departmentBase);
             SetEmployeeControlStatus(false);
-
         }
 
         public void AddEmployeeToBase(Employee emp)
         {
-            employeeBase.Employees.Add(emp);
-            UpdateBindings();
+            EmployeesList.Add(emp);
         }
-
-        private void UpdateBindings()
-        {
-            employeeListView.ItemsSource = null;
-            employeeListView.ItemsSource = employeeBase.Employees;
-        }
-
         private void SetEmployeeControlStatus(bool is_enabled)
         {
             //addButton.IsEnabled = is_enabled;
@@ -78,9 +75,10 @@ namespace Pract5
         {
             if (e.AddedItems.Count == 1)
             {
+                SelectedEmployee = (Employee)employeeListView.SelectedItem;
+                employeeUserControl.Emp = (Employee)SelectedEmployee.Clone();
                 selectedIndex = employeeListView.SelectedIndex;
                 SetEmployeeControlStatus(true);
-                employeeUserControl.ShowEmployeeInfo((Employee)e.AddedItems[0]);
             }
         }
 
@@ -88,8 +86,7 @@ namespace Pract5
         {
             if (employeeListView.SelectedItems.Count == 1)
             {
-                employeeUserControl.UpdateEmployeeInfo();
-                UpdateBindings();
+                EmployeesList[selectedIndex] = employeeUserControl.Emp;
                 MessageBox.Show("Запись обновлена!", "Изменение записи о сотруднике", MessageBoxButton.OK, MessageBoxImage.Information);
                 employeeListView.SelectedIndex = selectedIndex;
             }
@@ -100,9 +97,7 @@ namespace Pract5
             if (employeeListView.SelectedItems.Count == 1 && 
                 MessageBox.Show("Уверены что хотите удалит запись о сотркднике?", "Удаление записи сотрудника", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                employeeUserControl.UpdateEmployeeInfo();
-                employeeBase.Employees.RemoveAt(employeeListView.SelectedIndex);
-                UpdateBindings();
+                EmployeesList.RemoveAt(selectedIndex);
                 SetEmployeeControlStatus(false);
                 MessageBox.Show("Запись удалена!", "Изменение записи о сотруднике", MessageBoxButton.OK, MessageBoxImage.Information);
             }
@@ -113,7 +108,6 @@ namespace Pract5
             AddWindow addWindow = new AddWindow(departmentBase);
             addWindow.Owner = this;
             addWindow.ShowDialog();
-            //addWindow.Show();
         }
     }
 }
