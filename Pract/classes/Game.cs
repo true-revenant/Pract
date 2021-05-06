@@ -89,6 +89,19 @@ namespace Pract.classes
             LogAction(LogFile, "*********************************************************************");
         }
 
+        public static void Restart()
+        {
+
+            LoadGameScene();
+            points = 0;
+            LogAction(DebugLog, "ИГРА НАЧАТА!!");
+            LogAction(DebugLog, "*********************************************************************");
+            LogAction(LogFile, "ИГРА НАЧАТА!!");
+            LogAction(LogFile, "*********************************************************************");
+            timer.Start();
+            gameIsPaused = false;
+        }
+
         public static void Draw()
         {
             // рисуем фон космос
@@ -418,7 +431,8 @@ namespace Pract.classes
                 heathLineLength = 100;
                 
                 buffer.Graphics.Clear(Color.Black);
-                Init(gForm);
+                //Init(gForm);
+                Restart();
                 Draw();
             }
         }
