@@ -1,0 +1,7 @@
+F:\VS_projects\Geek Brains\2_Basics\Pract\ED_DBFiller\bin\Debug\ED_DBFiller.exe.config
+F:\VS_projects\Geek Brains\2_Basics\Pract\ED_DBFiller\bin\Debug\ED_DBFiller.exe
+F:\VS_projects\Geek Brains\2_Basics\Pract\ED_DBFiller\bin\Debug\ED_DBFiller.pdb
+F:\VS_projects\Geek Brains\2_Basics\Pract\ED_DBFiller\obj\Debug\ED_DBFiller.csprojAssemblyReference.cache
+F:\VS_projects\Geek Brains\2_Basics\Pract\ED_DBFiller\obj\Debug\ED_DBFiller.csproj.CoreCompileInputs.cache
+F:\VS_projects\Geek Brains\2_Basics\Pract\ED_DBFiller\obj\Debug\ED_DBFiller.exe
+F:\VS_projects\Geek Brains\2_Basics\Pract\ED_DBFiller\obj\Debug\ED_DBFiller.pdb

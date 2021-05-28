@@ -1,0 +1,2 @@
+F:\VS_projects\Geek Brains\2_Basics\Pract\ED_DBClassLibrary\obj\Debug\ED_DBClassLibrary.csprojAssemblyReference.cache
+F:\VS_projects\Geek Brains\2_Basics\Pract\ED_DBClassLibrary\obj\Debug\ED_DBClassLibrary.csproj.CoreCompileInputs.cache
